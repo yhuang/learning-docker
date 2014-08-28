@@ -1,0 +1,102 @@
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/running-postgresql-service-docker-container/dockerized-postgresql-database-mac-os-x-boot2docker.jpg" alt="image" /></p>
+
+<p>Docker, Inc. has published a <a href="https://docs.docker.com/examples/postgresql_service/">detailed tutorial on Dockerizing PostgreSQL</a>.  To keep the length of this tutorial manageable, we will simply use a <a href="https://github.com/kamui/docker-postgresql">publicly available Docker image</a> hosted on <a href="https://hub.docker.com/">Docker Hub</a>.  We leave Docker’s official example as an exercise for readers who want a deeper understanding of how Docker containerizes the PostgreSQL service.  The goal of this section is simply to introduce some basic Docker commands and frequently used command options.</p>
+
+<ol>
+<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure that the system is properly configured.</p></li>
+<li><p>Search for a "PostgreSQL 9.3" Docker image that has at least 5 stars.</p>
+
+<pre><code>Host% docker search --stars=5 "postgresql 9.3"
+
+# -s, --stars=0        Only displays with at least x stars
+
+NAME                    DESCRIPTION                      STARS  OFFICIAL
+postgres                PostgreSQL is a powerful, open   121    [OK]
+paintedfox/postgresql   A docker image for running Pos   37
+orchardup/postgresql    https://github.com/orchardup/do  13
+helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    12
+atlassian/jira          Atlassian Jira image with Postg  12
+zaiste/postgresql       PostgreSQL 9.2 - https://gist.g  8
+zumbrunnen/postgresql   PostgreSQL from apt.postgresql.  6
+jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   5
+kamui/postgresql        PostgreSQL 9.3 with configura    5
+abevoelker/ruby         Ruby 2.1.2, Postgres 9.3 clie    5
+grue/docker-sentry      An attempt to be mostly configu  5
+deis/database           PostgreSQL database for the Dei  5
+tutum/postgresql        PostgreSQL Docker Image – liste  5
+</code></pre>
+
+<p>We will use the <a href="https://registry.hub.docker.com/u/kamui/postgresql/"><code>kamui/postgresql</code></a> image throughout this tutorial.</p></li>
+<li><p>Launch a PostgreSQL service container from the <code>kamui/postgresql</code> image:</p>
+
+<pre><code>Host% docker run -p ::5432 --name db \
+-e POSTGRESQL_DB=hartl \
+-e POSTGRESQL_USER=docker \
+-e POSTGRESQL_PASS=docker \
+kamui/postgresql
+
+# -p      Publish a container's port to the host.  The :: notation
+#         delegates the host port selection to Docker.
+
+# --name  Assign a name to the container.
+
+# -e      Set environment variables.
+</code></pre></li>
+<li><p>Make sure the PostgreSQL Docker container is up and running with <code>docker ps -a</code>.  In this example, Docker has mapped <code>port 49153</code> on the Boot2Docker virtual machine to <code>port 5432</code>. on the newly started <code>db</code> container.</p>
+
+<pre><code>Host% docker ps -a
+CONTAINER ID  IMAGE             STATUS  PORTS        NAMES
+bd1f9fb66975  kamui/postgresql  Up      49153-&gt;5432  db
+
+# -a, --all=false       Show all containers. Only running containers are
+#                       shown by default.
+</code></pre></li>
+<li><p>Confirm that the PostgreSQL database container may be accessed locally.  Since the PostgreSQL database container was launched with environment variable <code>POSTGRESQL_PASS</code> set to docker, that will be the password in this example.</p>
+
+<pre><code>Host% psql -h localhost -p 49153 -U docker hartl
+Password for user docker: 
+psql (9.2.4, server 9.3.4)
+WARNING: psql version 9.2, server version 9.3.
+         Some psql features might not work.
+Type "help" for help.
+
+Hartl=#
+</code></pre>
+
+<p>Because we had forwarded ports in the <code>49000..49900</code> range from the Mac OS X host to the Boot2Docker virtual machine, the dockerized PostgreSQL service may be accessed from the Mac OS X host with <code>-h localhost</code> and <code>-p 49153</code>.</p></li>
+<li><p>To stop the PostgreSQL database container, press <code>Ctrl-c</code> in the console or run <code>docker stop &lt;container_id&gt;</code> or <code>docker stop &lt;container_name&gt;</code> in another console with its environment variable <code>DOCKER_HOST</code> set.  In this example, the PostgreSQL database container ID is <code>bd1f9fb66975</code>.</p>
+
+<pre><code>Host% docker stop bd1f9fb66975
+
+# OR
+
+Host% docker stop db
+
+# OR if the alias "dlc" has been defined to be "docker ps -l -q"
+
+Host% docker stop `dlc`
+</code></pre></li>
+<li><p>Since the PostgreSQL database container was not launched with the <code>--rm</code> option, the exited container will show up when <code>docker ps -a</code> is run.</p>
+
+<pre><code>Host% docker ps -a
+CONTAINER ID  IMAGE             STATUS  PORTS        NAMES
+bd1f9fb66975  kamui/postgresql  Exited  49153-&gt;5432  db
+</code></pre></li>
+<li><p>Remove the exited container.</p>
+
+<pre><code>Host% docker rm bd1f9fb66975
+
+# OR
+
+Host% docker rm db
+
+# OR if the alias "dlc" has been defined to be "docker ps -l -q"
+
+Host% docker rm `dlc`
+</code></pre></li>
+</ol>
+
+
+<h3>Summary</h3>
+
+<p>Docker, Inc. published a <a href="https://docs.docker.com/examples/postgresql_service/">detailed tutorial</a> to demonstrate how easy dockerizing system services like PostgreSQL can be.  We launched a public Docker image built in a way that is similar to the tutorial, so we may introduce some basic Docker commands and frequently used command options.  In the process, we showed how the Mac OS X host can connect to a dockerized PostgreSQL service on the Boot2Docker virtual machine.</p>

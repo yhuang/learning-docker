@@ -1,0 +1,123 @@
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/dockerfile-walkthrough/filbert-steps.jpg" alt="image" /></p>
+
+<p>To understand what the Dockerfile from the <code>LearningDocker/docker_quick_start</code> repository is doing, we will be stepping through it line by line.  In the process, we will become more familiar with the domain specific language (DSL) that powers Dockerfiles.</p>
+
+<pre><code>FROM debian:jessie
+
+MAINTAINER Learning Docker &lt;jimmy.huang@learningdocker.com&gt;
+
+RUN apt-get update &amp;&amp; apt-get install -qy \
+ curl \
+ git \
+ libpq-dev \
+ libprocps3 \
+ libprocps3-dev \
+ nodejs \
+ postgresql \
+ procps
+
+# Install RVM, Ruby 2.1.2, and the Bundler gem
+RUN curl -sSL https://get.rvm.io | bash -s stable
+RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install bundler --no-ri --no-rdoc"]
+
+# Run `bundle install` BEFORE adding the Rails application directory
+# structure to /app on the container's filesystem, so the resulting
+# image may be cached.
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+
+WORKDIR /app
+RUN ["/bin/bash", "-l", "-c", "bundle install"]
+
+# Add the Rails application directory structure to /app on the
+# container's filesystem
+ADD . /app
+
+# Add `/usr/bin/start-server` to the container's filesystem
+COPY config/container/start-server.sh /usr/bin/start-server
+RUN chmod +x /usr/bin/start-server
+
+# Open port 3000 on the container
+EXPOSE 3000
+
+# Overridable startup commands
+CMD ["/usr/bin/start-server"]
+</code></pre>
+
+<p>Docker starts the image building process by first launching a container from the base image.  Each instruction in Dockerfile makes a change to the container's filesystem.  Docker commits that change as a new image and then launches another container from the new image.  The process repeats until all the instructions in the Dockerfile have been executed.  Please keep this cycle in mind as we step through the Dockerfile.</p>
+
+<pre><code>FROM debian:jessie
+</code></pre>
+
+<p>The <code>FROM</code> instruction sets the base Docker image for the build process.  Michael Crosby of Docker, Inc. recommended the use of smaller base images like <code>debian:jessie</code> to avoid unnecessary bloat in an <a href="http://crosbymichael.com/dockerfile-best-practices-take-2.html">article on his company's blog</a>.  In the same article, he also suggested that the base image should always be specified with the appropriate tag.  <code>debian:jessie</code> is, for example, preferred over just <code>debian</code>.</p>
+
+<pre><code>MAINTAINER Learning Docker &lt;jimmy.huang@learningdocker.com&gt;
+</code></pre>
+
+<p>The <code>MAINTAINER</code> instruction sets the <em>author</em> field of the resulting image.  This line is highly recommended but not required.</p>
+
+<pre><code>RUN apt-get update &amp;&amp; apt-get install -qy \
+ curl \
+ git \
+ libpq-dev \
+ libprocps3 \
+ libprocps3-dev \
+ nodejs \
+ postgresql \
+ procps
+</code></pre>
+
+<p>The <code>RUN</code> instruction executes any command in a shell via <code>/bin/sh -c</code> on the container's filesystem.  On this line, we have rolled a system-wide upgrade and the installation of some basic Debian system packages required by the Rails application into one command as recommended by <a href="Dockerfile%20Best%20Practices](http://crosbymichael.com/dockerfile-best-practices-take-2.html">Michael Crosby of Docker, Inc.</a></p>
+
+<pre><code>RUN curl -sSL https://get.rvm.io | bash -s stable
+
+RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install bundler --no-ri --no-rdoc"]
+
+# -l  Make bash act as if it had been invoked as a login shell.
+
+# -c  Commands are read from string.
+</code></pre>
+
+<p>These two <code>RUN</code> instructions prepare the Docker image to launch a Ruby on Rails application.  We install the stable version of RVM in the first <code>RUN</code> instruction.  In the second <code>RUN</code> instruction, we use RVM to install Ruby 2.1.2 then add the bundler gem to the <code>ruby-2.1.2@global</code> gemset.  According to <a href="https://rvm.io/integration/gnome-terminal">RVM's documentation</a>, RVM requires the login shell to run properly; therefore, we need to pass <code>rvm requirements</code>, <code>rvm install 2.1.2</code>, and <code>gem install bundler --no-ri --no-rdoc</code> as a command string to the <code>bash</code> login shell.</p>
+
+<p>The second <code>RUN</code> instruction is in the exec form <code>RUN ["executable", "param1", "param2"]</code>.  The exec form avoids string munging by shell and lets the executable run using base images that do not contain <code>/bin/sh</code>.</p>
+
+<pre><code>COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
+
+WORKDIR /app
+RUN ["/bin/bash", "-l", "-c", "bundle install"]
+</code></pre>
+
+<p>The <code>COPY</code> instruction copies the source file or directory structure in the first argument into the path on the container's filesystem in the second argument.  If the destination does not exist on the container's filesystem, Docker will create it along with all the missing directories in the path.  In this Dockerfile, the two <code>COPY</code> instructions copy Gemfile and Gemfile.lock from the <code>LearningDocker/docker_quick_start</code> repository to <code>/app</code> on the container's filesystem.</p>
+
+<p>The <code>WORKDIR</code> instruction sets the working directory for any <code>RUN</code> instruction or <code>CMD</code> instruction that follows it in the Dockerfile.  In this Dockerfile, we set the working directory to <code>/app</code> on the container's filesystem and use the <code>RUN</code> instruction to call <code>bundle install</code> from there.</p>
+
+<p>RVM needs the login shell to run properly.  Since the bundler gem was installed in the <code>ruby-2.1.2@global</code> gemset, we need to pass <code>bundle install</code> as a command string to the <code>bash</code> login shell.</p>
+
+<pre><code>ADD . /app
+</code></pre>
+
+<p>The <code>ADD</code> instruction is just like the <code>COPY</code> instruction, except the <code>ADD</code> instruction can automatically unpack a valid compressed archive.  In this case, the Dockerfile assumes <code>.</code>, or the current directory, is the Rails application's root directory.  The contents of the entire root directory is copied into the <code>/app</code> directory on the container's filesystem.</p>
+
+<pre><code>COPY config/container/start-server.sh /usr/bin/start-server
+RUN chmod +x /usr/bin/start-server
+</code></pre>
+
+<p>The <code>COPY</code> instruction is perfect for copying single files like <code>config/container/start-server.sh</code> into the container's filesystem as <code>/usr/bin/start-server</code>.</p>
+
+<p>The <code>RUN</code> instruction then sets <code>/usr/bin/start-server</code> to be an executable, so <code>/usr/bin/start-server</code> may fire up the Rails application when the container launches.</p>
+
+<pre><code>EXPOSE 3000
+</code></pre>
+
+<p>The <code>EXPOSE</code> instruction tells Docker that the container <em>can</em> open <code>port 3000</code> for communcation; however, whether the port is exposed to the Boot2Docker virtual machine via the <code>-p</code> option, to another container via the <code>--link</code> option, or to both is not specified until runtime.</p>
+
+<pre><code>CMD ["/usr/bin/start-server"]
+</code></pre>
+
+<p>The <code>CMD</code> instruction provides the default command to run when the container is launched.  In this Dockerfile, the container will execute <code>/usr/bin/start-server</code> and fire up the Rails application at launch.</p>
+
+<h3>Summary</h3>
+
+<p>By stepping through the Dockerfle from the <code>LearningDocker/docker_quick_start</code> repository line by line, we have become familiar with common Dockerfile instructions like <code>ADD</code>, <code>RUN</code>, <code>WORKDIR</code>, and <code>CMD</code> and saw how these instructions can be used to build Docker images one layer at a time.  To learn more about Dockerfiles, please check out Docker, Inc.'s <a href="https://docs.docker.com/reference/builder/">Dockerfile Reference</a>.</p>

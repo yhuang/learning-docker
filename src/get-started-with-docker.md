@@ -1,0 +1,3 @@
+##Learning Docker#####Jimmy Y. Huang
+![image](https://s3.amazonaws.com/learningdocker/wordpress/welcome/shipping-containers.jpg)Docker, Inc. provides a tremendous amount of [detailed references](http://docs.docker.com/) and a slick [online interactive tutorial](https://www.docker.com/tryit/) to ease Docker's learning curve.  We designed this guide on Docker to complement the official documentation already available, so everyone may spin up some real use cases and start playing with Docker containers in the shortest amount of time possible.  This quick start guide is also available [online](http://learningdocker.com/).
+

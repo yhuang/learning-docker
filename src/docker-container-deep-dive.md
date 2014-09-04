@@ -27,7 +27,7 @@
 
 	```
 	Host% docker run --rm -P --name web \
-	--link db:dockerdb $USER/docker_quick_start
+	--link db:dockerdb learningdocker/docker_quick_start
 	
 	# --link  Add link to another container 
 	#         (container_name:container_alias).
@@ -44,11 +44,11 @@
 	# --name  Assign a name to the container
 	```
 
-4.  Launch the `$USER/docker_quick_start` image and run the `env` command to enumerate all environment variables on the container.
+4.  Launch the `learningdocker/docker_quick_start` image and run the `env` command to enumerate all environment variables on the container.
 	
 	```
 	Host% docker run --rm --name example \
-	--link db:dockerdb $USER/docker_quick_start env
+	--link db:dockerdb learningdocker/docker_quick_start env
 	HOME=/
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 	HOSTNAME=7775474b902d

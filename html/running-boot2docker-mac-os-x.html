@@ -3,7 +3,7 @@
 <p>Because the Docker engine relies on Linux-specific kernel features, it cannot run on Mac OS X directly yet.  Users who wish to run Docker on Mac OS X must do so through a Linux virtual machine.  This extra layer can make working with Docker on Mac OS X a bit unwieldy, espeically for people who are just getting started.  To make Docker easier to use on Mac OS X, Docker, Inc. developed <a href="http://docs.docker.com/installation/mac/">Boot2Docker</a> to streamline this process.</p>
 
 <ol>
-<li><p>Download the <a href="https://github.com/boot2docker/osx-installer/releases/download/v1.1.2/Boot2Docker-1.1.2.pkg">Boot2Docker package installer v1.1.2</a>, which will install VirtualBox v4.3.12, Boot2Docker.iso v1.1.2, Boot2Docker management utility v1.1.2, and Docker v1.1.2 to the Mac OS X host.</p>
+<li><p>Download the <a href="https://github.com/boot2docker/osx-installer/releases/download/v1.2.0/Boot2Docker-1.2.0.pkg">Boot2Docker package installer v1.2.0</a>, which will install VirtualBox v4.3.14, Boot2Docker.iso v1.2.0, Boot2Docker management utility v1.2.0, and Docker v1.2.0 to the Mac OS X host.</p>
 
 <p>VirtualBox is a general-purpose virtualizer for x86 hardware that will launch a lightweight Linux distribution on the Boot2Docker.iso called Tiny Core Linux.  Because it is small (under 25MB), Tiny Core Linux boots in seconds and runs completely from RAM.  Managing the Boot2Docker virtual machine is done through the Boot2Docker management utility <code>boot2docker</code> instead of VirtualBox.</p></li>
 <li><p>Double click on the Boot2Docker installer in the <code>Applications</code> folder.  The Boot2Docker installer will call the Boot2Docker management utility <code>boot2docker</code> to initialize and start the Boot2Docker virtual machine.  It will also set the <code>DOCKER_HOST</code> environment variable.  The <code>DOCKER_HOST</code> environment variable needs to be defined, so the Mac OS X host may connect to the Docker daemon on the Boot2Docker virtual machine.</p>
@@ -19,14 +19,15 @@ Host% export DOCKER_HOST=tcp://$(boot2docker ip 2&gt;/dev/null):2375
 # Information about the Docker client and Docker server installed 
 # on the Boot2docker virtual machine
 Host% docker version
-Client version: 1.1.2
-Client API version: 1.13
-Go version (client): go1.2.1
-Git commit (client): d84a070
-Server version: 1.1.2
-Server API version: 1.13
-Go version (server): go1.2.1
-Git commit (server): d84a070
+Client version: 1.2.0
+Client API version: 1.14
+Go version (client): go1.3.1
+Git commit (client): fa7b24f
+OS/Arch (client): darwin/amd64
+Server version: 1.2.0
+Server API version: 1.14
+Go version (server): go1.3.1
+Git commit (server): fa7b24f
 </code></pre>
 
 <p>Once the virtualized Docker engine is up and running, users can build, run, and manage Docker containers with the Mac OS X Docker client <code>docker</code>.</p></li>
@@ -47,8 +48,8 @@ Git commit (server): d84a070
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 
-boot2docker: 1.1.2
-             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+boot2docker: 1.2.0
+         3.16.1-config-file : e75396e - Fri Aug 22 06:45:30 UTC 2014
 </code></pre></li>
 <li><p>Stop the Boot2Docker virtual machine.</p>
 
@@ -60,9 +61,9 @@ boot2docker: 1.1.2
 VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i"; \
 done
 </code></pre></li>
-<li><p>Please follow <a href="https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c">Matthias Kadenbach’s blog post</a> and <a href="http://static.dockerfiles.io/boot2docker-v1.1.2-virtualbox-guest-additions-v4.3.12.iso">download the latest Boot2Docker v1.1.2 ISO with Guest Addition</a>.  To use the new ISO:</p>
+<li><p>Please follow <a href="https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c">Matthias Kadenbach’s blog post</a> and <a href="http://static.dockerfiles.io/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso">download the latest Boot2Docker v1.2.0 ISO with Guest Addition</a>.  To use the new ISO:</p>
 
-<pre><code>Host% mv ~/Downloads/boot2docker-v1.1.2-virtualbox-guest-additions-v4.3.12.iso \
+<pre><code>Host% mv ~/Downloads/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso \
 ~/.boot2docker/boot2docker.iso
 </code></pre></li>
 <li><p>Set the shared folder between the Boot2Docker virtual machine and the Mac OS X host.  Once this connection is established, data written to Boot2Docker will be accessible from the Mac OS X host.</p>
@@ -101,10 +102,10 @@ Shared folders:
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 
-  boot2docker with VirtualBox guest additions version 4.3.12
+  boot2docker with VirtualBox guest additions version 4.3.14
 
-boot2docker: 1.1.2
-             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+boot2docker: 1.2.0
+             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 </code></pre>
 
 <p>Nearly all of the steps in this quick start guide will be executed on the Mac OS X host and <strong><em>not</em></strong> the Boot2Docker virtual machine.  When the command is supposed to be run on the Boot2Docker virtual machine, readers will see <code>docker@boot2docker:~$</code> in the code block.</p></li>

@@ -4,27 +4,17 @@
 
 1.  Please go through the steps outlined under *[Preflight Checks](http://learningdocker.com/preflight-checks/)* to ensure that the system is properly configured.
 
-2.  Search for a "PostgreSQL 9.3" Docker image that has at least 5 stars.
+2.  Search for a PostgreSQL 9.3 Docker image that has at least 5 stars.
 
 	```
-	Host% docker search --stars=5 "postgresql 9.3"
+	Host% docker search --stars=5 "postgresql-9.3"
 	
 	# -s, --stars=0        Only displays with at least x stars
 	
 	NAME                    DESCRIPTION                      STARS  OFFICIAL
-	postgres                PostgreSQL is a powerful, open   121    [OK]
-	paintedfox/postgresql   A docker image for running Pos   37
-	orchardup/postgresql    https://github.com/orchardup/do  13
 	helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    12
-	atlassian/jira          Atlassian Jira image with Postg  12
-	zaiste/postgresql       PostgreSQL 9.2 - https://gist.g  8
-	zumbrunnen/postgresql   PostgreSQL from apt.postgresql.  6
 	jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   5
 	kamui/postgresql        PostgreSQL 9.3 with configura    5
-	abevoelker/ruby         Ruby 2.1.2, Postgres 9.3 clie    5
-	grue/docker-sentry      An attempt to be mostly configu  5
-	deis/database           PostgreSQL database for the Dei  5
-	tutum/postgresql        PostgreSQL Docker Image – liste  5
 	```
 	
 	We will use the [`kamui/postgresql`](https://registry.hub.docker.com/u/kamui/postgresql/) image throughout this tutorial.

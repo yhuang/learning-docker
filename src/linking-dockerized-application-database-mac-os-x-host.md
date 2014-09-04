@@ -125,10 +125,10 @@
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 	
-	  boot2docker with VirtualBox guest additions version 4.3.12
+	  boot2docker with VirtualBox guest additions version 4.3.14
 	
-	boot2docker: 1.1.2
-	             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+	boot2docker: 1.2.0
+	             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 	
 	
 	docker@boot2docker:~$ netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}'

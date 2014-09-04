@@ -6,7 +6,7 @@
 
 Because the Docker engine relies on Linux-specific kernel features, it cannot run on Mac OS X directly yet.  Users who wish to run Docker on Mac OS X must do so through a Linux virtual machine.  This extra layer can make working with Docker on Mac OS X a bit unwieldy, espeically for people who are just getting started.  To make Docker easier to use on Mac OS X, Docker, Inc. developed [Boot2Docker](http://docs.docker.com/installation/mac/) to streamline this process.
 
-1.  Download the [Boot2Docker package installer v1.1.2](https://github.com/boot2docker/osx-installer/releases/download/v1.1.2/Boot2Docker-1.1.2.pkg), which will install VirtualBox v4.3.12, Boot2Docker.iso v1.1.2, Boot2Docker management utility v1.1.2, and Docker v1.1.2 to the Mac OS X host.  
+1.  Download the [Boot2Docker package installer v1.2.0](https://github.com/boot2docker/osx-installer/releases/download/v1.2.0/Boot2Docker-1.2.0.pkg), which will install VirtualBox v4.3.14, Boot2Docker.iso v1.2.0, Boot2Docker management utility v1.2.0, and Docker v1.2.0 to the Mac OS X host.  
 
 	VirtualBox is a general-purpose virtualizer for x86 hardware that will launch a lightweight Linux distribution on the Boot2Docker.iso called Tiny Core Linux.  Because it is small (under 25MB), Tiny Core Linux boots in seconds and runs completely from RAM.  Managing the Boot2Docker virtual machine is done through the Boot2Docker management utility `boot2docker` instead of VirtualBox.  
 
@@ -24,14 +24,15 @@ Because the Docker engine relies on Linux-specific kernel features, it cannot ru
 	# Information about the Docker client and Docker server installed 
 	# on the Boot2docker virtual machine
 	Host% docker version
-	Client version: 1.1.2
-	Client API version: 1.13
-	Go version (client): go1.2.1
-	Git commit (client): d84a070
-	Server version: 1.1.2
-	Server API version: 1.13
-	Go version (server): go1.2.1
-	Git commit (server): d84a070
+	Client version: 1.2.0
+	Client API version: 1.14
+	Go version (client): go1.3.1
+	Git commit (client): fa7b24f
+	OS/Arch (client): darwin/amd64
+	Server version: 1.2.0
+	Server API version: 1.14
+	Go version (server): go1.3.1
+	Git commit (server): fa7b24f
 	```
 	
 	Once the virtualized Docker engine is up and running, users can build, run, and manage Docker containers with the Mac OS X Docker client `docker`.
@@ -51,17 +52,17 @@ Because the Docker engine relies on Linux-specific kernel features, it cannot ru
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 		
-	boot2docker: 1.1.2
-	             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+	boot2docker: 1.2.0
+             3.16.1-config-file : e75396e - Fri Aug 22 06:45:30 UTC 2014
 	```4.  Stop the Boot2Docker virtual machine.
 	```
 	Host% boot2docker stop	```5.  [Forward ports](http://cjlarose.com/2014/03/08/run-docker-with-vagrant.html) in the `49000..49900` range from the Mac OS X host to the Boot2Docker virtual machine, so a dockerized web service running on the Boot2Docker virtual machine may be accessed from the Mac OS X host.  This command only needs to be run once.	```
 	Host% for i in {49000..49900}; do \
 	VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i"; \
-	done	```6.  Please follow [Matthias Kadenbach’s blog post](https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c) and [download the latest Boot2Docker v1.1.2 ISO with Guest Addition](http://static.dockerfiles.io/boot2docker-v1.1.2-virtualbox-guest-additions-v4.3.12.iso).  To use the new ISO:
+	done	```6.  Please follow [Matthias Kadenbach’s blog post](https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c) and [download the latest Boot2Docker v1.2.0 ISO with Guest Addition](http://static.dockerfiles.io/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso).  To use the new ISO:
 
 	```
-	Host% mv ~/Downloads/boot2docker-v1.1.2-virtualbox-guest-additions-v4.3.12.iso \
+	Host% mv ~/Downloads/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso \
 	~/.boot2docker/boot2docker.iso
 	```7.  Set the shared folder between the Boot2Docker virtual machine and the Mac OS X host.  Once this connection is established, data written to Boot2Docker will be accessible from the Mac OS X host.	```
 	Host% VBoxManage sharedfolder add boot2docker-vm -name home -hostpath /Users	```8.  Confirm that the ports are being forwarded from the Mac OS X host to the Boot2Docker virtual machine and the `/Users` folder is being shared between the two systems.
@@ -92,10 +93,10 @@ Because the Docker engine relies on Linux-specific kernel features, it cannot ru
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 	
-	  boot2docker with VirtualBox guest additions version 4.3.12
+	  boot2docker with VirtualBox guest additions version 4.3.14
 	
-	boot2docker: 1.1.2
-	             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+	boot2docker: 1.2.0
+	             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 	```
 
 	Nearly all of the steps in this quick start guide will be executed on the Mac OS X host and ***not*** the Boot2Docker virtual machine.  When the command is supposed to be run on the Boot2Docker virtual machine, readers will see `docker@boot2docker:~$` in the code block.
@@ -144,10 +145,10 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 	
-	  boot2docker with VirtualBox guest additions version 4.3.12
+	  boot2docker with VirtualBox guest additions version 4.3.14
 	
-	boot2docker: 1.1.2
-	             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+	boot2docker: 1.2.0
+	             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 	
 	docker@boot2docker:~$ docker run --rm \
 	-v /var/lib/boot2docker:/target jpetazzo/nsenter
@@ -200,19 +201,20 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 	```
 	Host% docker info
 	Containers: 0
-	Images: 75
+	Images: 17
 	Storage Driver: aufs
 	 Root Dir: /mnt/sda1/var/lib/docker/aufs
-	 Dirs: 75
+	 Dirs: 17
 	Execution Driver: native-0.2
-	Kernel Version: 3.15.3-tinycore64
+	Kernel Version: 3.16.1-tinycore64
+	Operating System: Boot2Docker 1.2.0 (TCL 5.3); 
+	master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 	Debug mode (server): true
 	Debug mode (client): false
 	Fds: 10
-	Goroutines: 10
+	Goroutines: 13
 	EventsListeners: 0
 	Init Path: /usr/local/bin/docker
-	Sockets: [unix:///var/run/docker.sock tcp://0.0.0.0:2375]
 	Username: $USER
 	Registry: [https://index.docker.io/v1/]
 	```
@@ -225,34 +227,24 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 	Get http:///var/run/docker.sock/v1.13/info: dial unix /var/run/docker.sock: no such file or directory
 	
 	# Set the DOCKER_HOST environment variable:
-	Host% export DOCKER_HOST=$(/usr/local/bin/boot2docker ip 2>/dev/null):2375
+	Host% export DOCKER_HOST=tcp://$(/usr/local/bin/boot2docker ip 2>/dev/null):2375
 	```###Running PostgreSQL Service as a Docker Container
 ![image](https://s3.amazonaws.com/learningdocker/wordpress/running-postgresql-service-docker-container/dockerized-postgresql-database-mac-os-x-boot2docker.jpg)
 Docker, Inc. has published a [detailed tutorial on Dockerizing PostgreSQL](https://docs.docker.com/examples/postgresql_service/).  To keep the length of this tutorial manageable, we will simply use a [publicly available Docker image](https://github.com/kamui/docker-postgresql) hosted on [Docker Hub](https://hub.docker.com/).  We leave Docker’s official example as an exercise for readers who want a deeper understanding of how Docker containerizes the PostgreSQL service.  The goal of this section is simply to introduce some basic Docker commands and frequently used command options.
 
 1.  Please go through the steps outlined under *[Preflight Checks](http://learningdocker.com/preflight-checks/)* to ensure that the system is properly configured.
 
-2.  Search for a "PostgreSQL 9.3" Docker image that has at least 5 stars.
+2.  Search for a PostgreSQL 9.3 Docker image that has at least 5 stars.
 
 	```
-	Host% docker search --stars=5 "postgresql 9.3"
+	Host% docker search --stars=5 "postgresql-9.3"
 	
 	# -s, --stars=0        Only displays with at least x stars
 	
 	NAME                    DESCRIPTION                      STARS  OFFICIAL
-	postgres                PostgreSQL is a powerful, open   121    [OK]
-	paintedfox/postgresql   A docker image for running Pos   37
-	orchardup/postgresql    https://github.com/orchardup/do  13
 	helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    12
-	atlassian/jira          Atlassian Jira image with Postg  12
-	zaiste/postgresql       PostgreSQL 9.2 - https://gist.g  8
-	zumbrunnen/postgresql   PostgreSQL from apt.postgresql.  6
 	jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   5
 	kamui/postgresql        PostgreSQL 9.3 with configura    5
-	abevoelker/ruby         Ruby 2.1.2, Postgres 9.3 clie    5
-	grue/docker-sentry      An attempt to be mostly configu  5
-	deis/database           PostgreSQL database for the Dei  5
-	tutum/postgresql        PostgreSQL Docker Image – liste  5
 	```
 	
 	We will use the [`kamui/postgresql`](https://registry.hub.docker.com/u/kamui/postgresql/) image throughout this tutorial.
@@ -624,7 +616,7 @@ We learned two ways the application container can connect to the database contai
 
 	```
 	Host% docker run --rm -P --name web \
-	--link db:dockerdb $USER/docker_quick_start
+	--link db:dockerdb learningdocker/docker_quick_start
 	
 	# --link  Add link to another container 
 	#         (container_name:container_alias).
@@ -641,11 +633,11 @@ We learned two ways the application container can connect to the database contai
 	# --name  Assign a name to the container
 	```
 
-4.  Launch the `$USER/docker_quick_start` image and run the `env` command to enumerate all environment variables on the container.
+4.  Launch the `learningdocker/docker_quick_start` image and run the `env` command to enumerate all environment variables on the container.
 	
 	```
 	Host% docker run --rm --name example \
-	--link db:dockerdb $USER/docker_quick_start env
+	--link db:dockerdb learningdocker/docker_quick_start env
 	HOME=/
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 	HOSTNAME=7775474b902d
@@ -1292,10 +1284,10 @@ By stepping through the Dockerfle from the `LearningDocker/docker_quick_start` r
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 	
-	  boot2docker with VirtualBox guest additions version 4.3.12
+	  boot2docker with VirtualBox guest additions version 4.3.14
 	
-	boot2docker: 1.1.2
-	             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+	boot2docker: 1.2.0
+	             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 	
 	
 	docker@boot2docker:~$ netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}'

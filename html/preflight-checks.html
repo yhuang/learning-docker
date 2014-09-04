@@ -19,19 +19,20 @@ To connect the Docker client to the Docker daemon, please set:
 
 <pre><code>Host% docker info
 Containers: 0
-Images: 75
+Images: 17
 Storage Driver: aufs
  Root Dir: /mnt/sda1/var/lib/docker/aufs
- Dirs: 75
+ Dirs: 17
 Execution Driver: native-0.2
-Kernel Version: 3.15.3-tinycore64
+Kernel Version: 3.16.1-tinycore64
+Operating System: Boot2Docker 1.2.0 (TCL 5.3); 
+master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 Debug mode (server): true
 Debug mode (client): false
 Fds: 10
-Goroutines: 10
+Goroutines: 13
 EventsListeners: 0
 Init Path: /usr/local/bin/docker
-Sockets: [unix:///var/run/docker.sock tcp://0.0.0.0:2375]
 Username: $USER
 Registry: [https://index.docker.io/v1/]
 </code></pre></li>
@@ -42,6 +43,6 @@ Host% docker info
 Get http:///var/run/docker.sock/v1.13/info: dial unix /var/run/docker.sock: no such file or directory
 
 # Set the DOCKER_HOST environment variable:
-Host% export DOCKER_HOST=$(/usr/local/bin/boot2docker ip 2&gt;/dev/null):2375
+Host% export DOCKER_HOST=tcp://$(/usr/local/bin/boot2docker ip 2&gt;/dev/null):2375
 </code></pre></li>
 </ol>

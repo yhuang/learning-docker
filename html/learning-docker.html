@@ -311,14 +311,14 @@ sup {
 
 <p>Docker, Inc. provides a tremendous amount of <a href="http://docs.docker.com/">detailed references</a> and a slick <a href="https://www.docker.com/tryit/">online interactive tutorial</a> to ease Docker's learning curve.  We designed this guide on Docker to complement the official documentation already available, so everyone may spin up some real use cases and start playing with Docker containers in the shortest amount of time possible.  This quick start guide is also available <a href="http://learningdocker.com/">online</a>.</p>
 
-<h3>Running Boot2Docker on Mac OS X</h3>
+<h2>Running Boot2Docker on Mac OS X</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/running-boot2docker-mac-os-x/mac-os-x-laptop.jpg" alt="image" /></p>
 
 <p>Because the Docker engine relies on Linux-specific kernel features, it cannot run on Mac OS X directly yet.  Users who wish to run Docker on Mac OS X must do so through a Linux virtual machine.  This extra layer can make working with Docker on Mac OS X a bit unwieldy, espeically for people who are just getting started.  To make Docker easier to use on Mac OS X, Docker, Inc. developed <a href="http://docs.docker.com/installation/mac/">Boot2Docker</a> to streamline this process.</p>
 
 <ol>
-<li><p>Download the <a href="https://github.com/boot2docker/osx-installer/releases/download/v1.1.2/Boot2Docker-1.1.2.pkg">Boot2Docker package installer v1.1.2</a>, which will install VirtualBox v4.3.12, Boot2Docker.iso v1.1.2, Boot2Docker management utility v1.1.2, and Docker v1.1.2 to the Mac OS X host.</p>
+<li><p>Download the <a href="https://github.com/boot2docker/osx-installer/releases/download/v1.2.0/Boot2Docker-1.2.0.pkg">Boot2Docker package installer v1.2.0</a>, which will install VirtualBox v4.3.14, Boot2Docker.iso v1.2.0, Boot2Docker management utility v1.2.0, and Docker v1.2.0 to the Mac OS X host.</p>
 
 <p>VirtualBox is a general-purpose virtualizer for x86 hardware that will launch a lightweight Linux distribution on the Boot2Docker.iso called Tiny Core Linux.  Because it is small (under 25MB), Tiny Core Linux boots in seconds and runs completely from RAM.  Managing the Boot2Docker virtual machine is done through the Boot2Docker management utility <code>boot2docker</code> instead of VirtualBox.</p></li>
 <li><p>Double click on the Boot2Docker installer in the <code>Applications</code> folder.  The Boot2Docker installer will call the Boot2Docker management utility <code>boot2docker</code> to initialize and start the Boot2Docker virtual machine.  It will also set the <code>DOCKER_HOST</code> environment variable.  The <code>DOCKER_HOST</code> environment variable needs to be defined, so the Mac OS X host may connect to the Docker daemon on the Boot2Docker virtual machine.</p>
@@ -334,14 +334,15 @@ Host% export DOCKER_HOST=tcp://$(boot2docker ip 2&gt;/dev/null):2375
 # Information about the Docker client and Docker server installed 
 # on the Boot2docker virtual machine
 Host% docker version
-Client version: 1.1.2
-Client API version: 1.13
-Go version (client): go1.2.1
-Git commit (client): d84a070
-Server version: 1.1.2
-Server API version: 1.13
-Go version (server): go1.2.1
-Git commit (server): d84a070
+Client version: 1.2.0
+Client API version: 1.14
+Go version (client): go1.3.1
+Git commit (client): fa7b24f
+OS/Arch (client): darwin/amd64
+Server version: 1.2.0
+Server API version: 1.14
+Go version (server): go1.3.1
+Git commit (server): fa7b24f
 </code></pre>
 
 <p>Once the virtualized Docker engine is up and running, users can build, run, and manage Docker containers with the Mac OS X Docker client <code>docker</code>.</p></li>
@@ -362,8 +363,8 @@ Git commit (server): d84a070
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 
-boot2docker: 1.1.2
-             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+boot2docker: 1.2.0
+         3.16.1-config-file : e75396e - Fri Aug 22 06:45:30 UTC 2014
 </code></pre></li>
 <li><p>Stop the Boot2Docker virtual machine.</p>
 
@@ -375,9 +376,9 @@ boot2docker: 1.1.2
 VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i"; \
 done
 </code></pre></li>
-<li><p>Please follow <a href="https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c">Matthias Kadenbach’s blog post</a> and <a href="http://static.dockerfiles.io/boot2docker-v1.1.2-virtualbox-guest-additions-v4.3.12.iso">download the latest Boot2Docker v1.1.2 ISO with Guest Addition</a>.  To use the new ISO:</p>
+<li><p>Please follow <a href="https://medium.com/boot2docker-lightweight-linux-for-docker/boot2docker-together-with-virtualbox-guest-additions-da1e3ab2465c">Matthias Kadenbach’s blog post</a> and <a href="http://static.dockerfiles.io/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso">download the latest Boot2Docker v1.2.0 ISO with Guest Addition</a>.  To use the new ISO:</p>
 
-<pre><code>Host% mv ~/Downloads/boot2docker-v1.1.2-virtualbox-guest-additions-v4.3.12.iso \
+<pre><code>Host% mv ~/Downloads/boot2docker-v1.2.0-virtualbox-guest-additions-v4.3.14.iso \
 ~/.boot2docker/boot2docker.iso
 </code></pre></li>
 <li><p>Set the shared folder between the Boot2Docker virtual machine and the Mac OS X host.  Once this connection is established, data written to Boot2Docker will be accessible from the Mac OS X host.</p>
@@ -416,10 +417,10 @@ Shared folders:
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 
-  boot2docker with VirtualBox guest additions version 4.3.12
+  boot2docker with VirtualBox guest additions version 4.3.14
 
-boot2docker: 1.1.2
-             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+boot2docker: 1.2.0
+             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 </code></pre>
 
 <p>Nearly all of the steps in this quick start guide will be executed on the Mac OS X host and <strong><em>not</em></strong> the Boot2Docker virtual machine.  When the command is supposed to be run on the Boot2Docker virtual machine, readers will see <code>docker@boot2docker:~$</code> in the code block.</p></li>
@@ -440,11 +441,11 @@ alias drm="docker ps -a | grep Exited | cut -d ' ' -f 1 | xargs docker rm"
 </ol>
 
 
-<h4>Summary</h4>
+<h3>Summary</h3>
 
 <p>Because the Docker engine cannot run on Mac OS X directly yet, users who wish to run Docker on Mac OS X must do so through a Linux virtual machine.  This extra layer makes using Docker on Mac OS X slightly complicated.  With the help of port forwarding and a Boot2Docker image that includes VirtualBox guest additions, we can now work with Docker on our Mac OS X almost as if we were on a Linux system.</p>
 
-<h3>Getting Inside Running Docker Containers without SSH</h3>
+<h2>Getting Inside Running Docker Containers without SSH</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/getting-inside-running-docker-containers-without-ssh/open-shipping-container.jpg" alt="image" /></p>
 
@@ -468,10 +469,10 @@ alias drm="docker ps -a | grep Exited | cut -d ' ' -f 1 | xargs docker rm"
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 
-  boot2docker with VirtualBox guest additions version 4.3.12
+  boot2docker with VirtualBox guest additions version 4.3.14
 
-boot2docker: 1.1.2
-             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+boot2docker: 1.2.0
+             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 
 docker@boot2docker:~$ docker run --rm \
 -v /var/lib/boot2docker:/target jpetazzo/nsenter
@@ -497,7 +498,7 @@ docker-enter() {
 }
 </code></pre>
 
-<h3>Preflight Checks</h3></li>
+<h2>Preflight Checks</h2></li>
 </ol>
 
 
@@ -522,19 +523,20 @@ To connect the Docker client to the Docker daemon, please set:
 
 <pre><code>Host% docker info
 Containers: 0
-Images: 75
+Images: 17
 Storage Driver: aufs
  Root Dir: /mnt/sda1/var/lib/docker/aufs
- Dirs: 75
+ Dirs: 17
 Execution Driver: native-0.2
-Kernel Version: 3.15.3-tinycore64
+Kernel Version: 3.16.1-tinycore64
+Operating System: Boot2Docker 1.2.0 (TCL 5.3); 
+master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 Debug mode (server): true
 Debug mode (client): false
 Fds: 10
-Goroutines: 10
+Goroutines: 13
 EventsListeners: 0
 Init Path: /usr/local/bin/docker
-Sockets: [unix:///var/run/docker.sock tcp://0.0.0.0:2375]
 Username: $USER
 Registry: [https://index.docker.io/v1/]
 </code></pre></li>
@@ -545,12 +547,12 @@ Host% docker info
 Get http:///var/run/docker.sock/v1.13/info: dial unix /var/run/docker.sock: no such file or directory
 
 # Set the DOCKER_HOST environment variable:
-Host% export DOCKER_HOST=$(/usr/local/bin/boot2docker ip 2&gt;/dev/null):2375
+Host% export DOCKER_HOST=tcp://$(/usr/local/bin/boot2docker ip 2&gt;/dev/null):2375
 </code></pre></li>
 </ol>
 
 
-<h3>Running PostgreSQL Service as a Docker Container</h3>
+<h2>Running PostgreSQL Service as a Docker Container</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/running-postgresql-service-docker-container/dockerized-postgresql-database-mac-os-x-boot2docker.jpg" alt="image" /></p>
 
@@ -558,26 +560,16 @@ Host% export DOCKER_HOST=$(/usr/local/bin/boot2docker ip 2&gt;/dev/null):2375
 
 <ol>
 <li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure that the system is properly configured.</p></li>
-<li><p>Search for a "PostgreSQL 9.3" Docker image that has at least 5 stars.</p>
+<li><p>Search for a PostgreSQL 9.3 Docker image that has at least 5 stars.</p>
 
-<pre><code>Host% docker search --stars=5 "postgresql 9.3"
+<pre><code>Host% docker search --stars=5 "postgresql-9.3"
 
 # -s, --stars=0        Only displays with at least x stars
 
 NAME                    DESCRIPTION                      STARS  OFFICIAL
-postgres                PostgreSQL is a powerful, open   121    [OK]
-paintedfox/postgresql   A docker image for running Pos   37
-orchardup/postgresql    https://github.com/orchardup/do  13
 helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    12
-atlassian/jira          Atlassian Jira image with Postg  12
-zaiste/postgresql       PostgreSQL 9.2 - https://gist.g  8
-zumbrunnen/postgresql   PostgreSQL from apt.postgresql.  6
 jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   5
 kamui/postgresql        PostgreSQL 9.3 with configura    5
-abevoelker/ruby         Ruby 2.1.2, Postgres 9.3 clie    5
-grue/docker-sentry      An attempt to be mostly configu  5
-deis/database           PostgreSQL database for the Dei  5
-tutum/postgresql        PostgreSQL Docker Image – liste  5
 </code></pre>
 
 <p>We will use the <a href="https://registry.hub.docker.com/u/kamui/postgresql/"><code>kamui/postgresql</code></a> image throughout this tutorial.</p></li>
@@ -651,11 +643,11 @@ Host% docker rm `dlc`
 </ol>
 
 
-<h4>Summary</h4>
+<h3>Summary</h3>
 
 <p>Docker, Inc. published a <a href="https://docs.docker.com/examples/postgresql_service/">detailed tutorial</a> to demonstrate how easy dockerizing system services like PostgreSQL can be.  We launched a public Docker image built in a way that is similar to the tutorial, so we may introduce some basic Docker commands and frequently used command options.  In the process, we showed how the Mac OS X host can connect to a dockerized PostgreSQL service on the Boot2Docker virtual machine.</p>
 
-<h3>Running a Rails App over Two Docker Containers</h3>
+<h2>Running a Rails App over Two Docker Containers</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/running-rails-app-over-two-docker-containers/dockerized-rails-app-two-containers-mac-os-x-boot2docker.jpg" alt="image" /></p>
 
@@ -879,13 +871,13 @@ Host% docker stop db
 </ol>
 
 
-<h4>Summary</h4>
+<h3>Summary</h3>
 
 <p>By launching an application container and a database container from the Boot2Docker virtual machine, we effectively deployed a fully functional web application on our local Mac OS X host.  For the two containers to work together as part of a web application, the application container has to know about the database container.</p>
 
 <p>We learned two ways the application container can connect to the database container.  First we passed in all the information about the database container as environment variables to the <code>docker run</code> command that spun up the application container; then we specified the database container in the <code>--link</code> option in order to omit all those environment variables from the same <code>docker run</code> command.</p>
 
-<h3>Docker Container Deep Dive</h3>
+<h2>Docker Container Deep Dive</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/docker-container-deep-dive/deep-diving-whale.jpg" alt="image" /></p>
 
@@ -911,7 +903,7 @@ kamui/postgresql
 <li><p>Launch the Rails application container.</p>
 
 <pre><code>Host% docker run --rm -P --name web \
---link db:dockerdb $USER/docker_quick_start
+--link db:dockerdb learningdocker/docker_quick_start
 
 # --link  Add link to another container 
 #         (container_name:container_alias).
@@ -927,10 +919,10 @@ kamui/postgresql
 
 # --name  Assign a name to the container
 </code></pre></li>
-<li><p>Launch the <code>$USER/docker_quick_start</code> image and run the <code>env</code> command to enumerate all environment variables on the container.</p>
+<li><p>Launch the <code>learningdocker/docker_quick_start</code> image and run the <code>env</code> command to enumerate all environment variables on the container.</p>
 
 <pre><code>Host% docker run --rm --name example \
---link db:dockerdb $USER/docker_quick_start env
+--link db:dockerdb learningdocker/docker_quick_start env
 HOME=/
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=7775474b902d
@@ -1039,7 +1031,7 @@ Host% docker stop db
 </ol>
 
 
-<h3>Building Images with Dockerfiles</h3>
+<h2>Building Images with Dockerfiles</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/building-images-with-dockerfiles/making-containers.jpg" alt="image" /></p>
 
@@ -1289,13 +1281,13 @@ sys     0m0.036s
 </ol>
 
 
-<h4>How Docker Image Caching Works</h4>
+<h3>How Docker Image Caching Works</h3>
 
 <p>Docker starts the image building process by first launching a container from the base image.  Each instruction in Dockerfile makes a change to the container's filesystem.  Docker commits that change as a new image and then launches another container from the new image.</p>
 
 <p>As Docker steps through a given Dockerfile, it will use the image generated by the previous instruction (parent image) and the current instruction to do the cache lookup.  Docker will iterate over all the images that depend on the parent image and look for one with the same instruction applied to it as the current instruction.  If a match surfaces, Docker will skip to the next instruction in the Dockerfile; if no match is found, Docker will execute the current instruction on a container launched from the parent image and commit the resulting change as a new image.  The process repeats until all the instructions in the Dockerfile have been evaluated.</p>
 
-<h3>Dockerfile Walkthrough</h3>
+<h2>Dockerfile Walkthrough</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/dockerfile-walkthrough/filbert-steps.jpg" alt="image" /></p>
 
@@ -1417,11 +1409,11 @@ RUN chmod +x /usr/bin/start-server
 
 <p>The <code>CMD</code> instruction provides the default command to run when the container is launched.  In this Dockerfile, the container will execute <code>/usr/bin/start-server</code> and fire up the Rails application at launch.</p>
 
-<h4>Summary</h4>
+<h3>Summary</h3>
 
 <p>By stepping through the Dockerfle from the <code>LearningDocker/docker_quick_start</code> repository line by line, we have become familiar with common Dockerfile instructions like <code>ADD</code>, <code>RUN</code>, <code>WORKDIR</code>, and <code>CMD</code> and saw how these instructions can be used to build Docker images one layer at a time.  To learn more about Dockerfiles, please check out Docker, Inc.'s <a href="https://docs.docker.com/reference/builder/">Dockerfile Reference</a>.</p>
 
-<h3>Linking a Dockerized Application to a Database on the Mac OS X Host</h3>
+<h2>Linking a Dockerized Application to a Database on the Mac OS X Host</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/linking-dockerized-application-database-mac-os-x-host/dockerized-rails-application-postgresql-database-mac-os-x.jpg" alt="image" /></p>
 
@@ -1540,10 +1532,10 @@ Finished in 6.39 seconds
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 
-  boot2docker with VirtualBox guest additions version 4.3.12
+  boot2docker with VirtualBox guest additions version 4.3.14
 
-boot2docker: 1.1.2
-             master : 740106c - Thu Jul 24 03:24:10 UTC 2014
+boot2docker: 1.2.0
+             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 
 
 docker@boot2docker:~$ netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}'
@@ -1574,11 +1566,11 @@ Host% docker stop web
 </ol>
 
 
-<h4>Summary</h4>
+<h3>Summary</h3>
 
 <p>In this section, we created a PostgreSQL database on the Mac OS X host and accessed it from a dockerized Rails application on the Boot2Docker virtual machine.  This setup is the inverse of what we did earlier, where we launched PostgreSQL Service as a Docker Container on the Boot2Docker virtual machine and logged onto it from the Mac OS X host.  What made this example interesting is how we established connection from a Docker container on the Boot2Docker virtual machine to the Mac OS X host via Boot2Docker virtual machine's default gateway.</p>
 
-<h3>Starting Over</h3>
+<h2>Starting Over</h2>
 
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/starting-over-mac-os-x/second-verse-same-as-the-first.jpg" alt="image" /></p>
 

@@ -22,7 +22,7 @@ kamui/postgresql
 <li><p>Launch the Rails application container.</p>
 
 <pre><code>Host% docker run --rm -P --name web \
---link db:dockerdb $USER/docker_quick_start
+--link db:dockerdb learningdocker/docker_quick_start
 
 # --link  Add link to another container 
 #         (container_name:container_alias).
@@ -38,10 +38,10 @@ kamui/postgresql
 
 # --name  Assign a name to the container
 </code></pre></li>
-<li><p>Launch the <code>$USER/docker_quick_start</code> image and run the <code>env</code> command to enumerate all environment variables on the container.</p>
+<li><p>Launch the <code>learningdocker/docker_quick_start</code> image and run the <code>env</code> command to enumerate all environment variables on the container.</p>
 
 <pre><code>Host% docker run --rm --name example \
---link db:dockerdb $USER/docker_quick_start env
+--link db:dockerdb learningdocker/docker_quick_start env
 HOME=/
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=7775474b902d

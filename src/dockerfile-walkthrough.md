@@ -23,31 +23,28 @@ RUN apt-get update && apt-get install -qy \
 RUN curl -sSL https://get.rvm.io | bash -s stable
 RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install bundler --no-ri --no-rdoc"]
 
-# Run `bundle install` BEFORE adding the Rails application directory
-# structure to /app on the container's filesystem, so the resulting
-# image may be cached.
+# Run `bundle install` BEFORE adding the Rails application directory structure
+# to /app on the container's filesystem.
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 
 WORKDIR /app
+
 RUN ["/bin/bash", "-l", "-c", "bundle install"]
 
-# Add the Rails application directory structure to /app on the
-# container's filesystem
+# Add the Rails application directory structure to /app on the container's filesystem
 ADD . /app
-
-# Add `/usr/bin/start-server` to the container's filesystem
-COPY config/container/start-server.sh /usr/bin/start-server
-RUN chmod +x /usr/bin/start-server
 
 # Open port 3000 on the container
 EXPOSE 3000
 
 # Overridable startup commands
-CMD ["/usr/bin/start-server"]
+CMD ["/app/bin/start-server"]
 ```
 
 Docker starts the image building process by first launching a container from the base image.  Each instruction in Dockerfile makes a change to the container's filesystem.  Docker commits that change as a new image and then launches another container from the new image.  The process repeats until all the instructions in the Dockerfile have been executed.  Please keep this cycle in mind as we step through the Dockerfile.
+
+![image](https://s3.amazonaws.com/learningdocker/wordpress/dockerfile-walkthrough/dockerfile-build.png)
 
 ```
 FROM debian:jessie
@@ -110,25 +107,16 @@ ADD . /app
 The `ADD` instruction is just like the `COPY` instruction, except the `ADD` instruction can automatically unpack a valid compressed archive.  In this case, the Dockerfile assumes `.`, or the current directory, is the Rails application's root directory.  The contents of the entire root directory is copied into the `/app` directory on the container's filesystem.
 
 ```
-COPY config/container/start-server.sh /usr/bin/start-server
-RUN chmod +x /usr/bin/start-server
-```
-
-The `COPY` instruction is perfect for copying single files like `config/container/start-server.sh` into the container's filesystem as `/usr/bin/start-server`.
-	
-The `RUN` instruction then sets `/usr/bin/start-server` to be an executable, so `/usr/bin/start-server` may fire up the Rails application when the container launches.
-
-```
 EXPOSE 3000
 ```
 
 The `EXPOSE` instruction tells Docker that the container *can* open `port 3000` for communcation; however, whether the port is exposed to the Boot2Docker virtual machine via the `-p` option, to another container via the `--link` option, or to both is not specified until runtime.
 
 ```
-CMD ["/usr/bin/start-server"]
+CMD ["/app/bin/start-server"]
 ```
 
-The `CMD` instruction provides the default command to run when the container is launched.  In this Dockerfile, the container will execute `/usr/bin/start-server` and fire up the Rails application at launch.
+The `CMD` instruction provides the default command to run when the container is launched.  In this Dockerfile, the container will execute `/app/bin/start-server` and fire up the Rails application at launch.
 
 ####Summary
 

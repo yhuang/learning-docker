@@ -138,7 +138,8 @@
 8.	Launch the Rails application container from the Docker image `$USER/docker_quick_start`.
 
 	```
-	Host% docker run --rm -P --name web \
+	Host% docker run --rm -P \
+	--name web \
 	-e DOCKERDB_ENV_POSTGRESQL_DB=hartl_development \
 	-e DOCKERDB_ENV_POSTGRESQL_USER=docker \
 	-e DOCKERDB_ENV_POSTGRESQL_PASS=docker \

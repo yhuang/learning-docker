@@ -7,7 +7,8 @@
 2.  Launch the PostgreSQL database container.
 
 	```
-	Host% docker run --rm -p ::5432 --name db \
+	Host% docker run --rm -p ::5432 \
+	--name db \
 	-e POSTGRESQL_DB=hartl \
 	-e POSTGRESQL_USER=docker \
 	-e POSTGRESQL_PASS=docker \
@@ -64,7 +65,8 @@
 6.  Launch the Rails application container from the newly built Docker image `learningdocker/docker_quick_start`.
 
 	```
-	Host% docker run --rm -P --name web \
+	Host% docker run --rm -P \
+	--name web \
 	-e DOCKERDB_ENV_POSTGRESQL_DB=hartl \
 	-e DOCKERDB_ENV_POSTGRESQL_USER=docker \
 	-e DOCKERDB_ENV_POSTGRESQL_PASS=docker \
@@ -81,11 +83,11 @@
 	# -e      Set environment variables
 	```
 
-	The new container named `web` will ultimately execute the script `/usr/bin/start-server` on its filesystem.
+	The new container named `web` will ultimately execute the script `/app/bin/start-server` on its filesystem.
 
 	```
 	Host% docker-enter web
-	root@a6bdcfbc845b# more /usr/bin/start-server                 
+	root@a6bdcfbc845b# more /app/bin/start-server                 
 	#!/bin/bash
 	cd /app
 	source /etc/profile.d/rvm.sh
@@ -142,7 +144,8 @@
 
 	```
 	# Without Linking (Do NOT Run)
-	Host% docker run --rm -P --name web \
+	Host% docker run --rm -P \
+	--name web \
 	-e DOCKERDB_ENV_POSTGRESQL_DB=hartl \
 	-e DOCKERDB_ENV_POSTGRESQL_USER=docker \
 	-e DOCKERDB_ENV_POSTGRESQL_PASS=docker \
@@ -155,8 +158,10 @@
 	
 	```
 	# With Linking (Run)
-	Host% docker run --rm -P --name web \
-	--link db:dockerdb learningdocker/docker_quick_start
+	Host% docker run --rm -P \
+	--name web \
+	--link db:dockerdb \
+	learningdocker/docker_quick_start
 	
 	# --link  Add link to another container 
 	#         (container_name:container_alias).
@@ -168,8 +173,10 @@
 11.	 To see what Docker is doing better, we will launch the `learningdocker/docker_quick_start` image and run the `env` command to enumerate all environment variables on the container.  The container alias in this case is `bleacher_report`, so all the environment variables inside the container are prefixed with `BLEACHER_REPORT_`.
 	
 	```
-	Host% docker run --rm --name example \
-	--link db:bleacher_report learningdocker/docker_quick_start env
+	Host% docker run --rm \
+	--name example \
+	--link db:bleacher_report \
+	learningdocker/docker_quick_start env
 	HOME=/
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 	HOSTNAME=7775474b902d

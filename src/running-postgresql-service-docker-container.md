@@ -23,7 +23,8 @@
 3.  Launch a PostgreSQL service container from the `kamui/postgresql` image:
 
 	```
-	Host% docker run -p ::5432 --name db \
+	Host% docker run -p ::5432 \
+	--name db \
 	-e POSTGRESQL_DB=hartl \
 	-e POSTGRESQL_USER=docker \
 	-e POSTGRESQL_PASS=docker \

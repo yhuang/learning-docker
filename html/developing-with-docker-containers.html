@@ -1,0 +1,132 @@
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/containers-for-developers.jpg" alt="image" /></p>
+
+<p>For Docker to deliver on that promise of consistent development and deployment, a developer should be able to work on the same container that will be shipped to production.  One way for a developer to accomplish this goal is to build the application's Docker image, launch the resulting Docker image, and check out the dockerized application on the development machine every time the code changes.  Although each round of the Docker image rebuild can be sped up dramatically with proper caching, this workflow remains tedious and awkward.</p>
+
+<p>A better way to integrate Docker into a programmer's development workflow is to leverage data volumes.  <a href="http://crosbymichael.com/advanced-docker-volumes.html">Data volumes</a> are simply local host directories that enable data persistance and sharing across multiple containers.  These specially designated directories are mounted at specific paths inside the container.  In the context of application development workflow, the rapidly changing code base will be mounted from the developer's local host machine onto the container via Docker's volume option <code>-v</code>.  The container used in development would be launched with an interactive Bash shell, so the developer can restart the application server at will from inside the container.  Changes to the code base on the data volume are made directly on the local host directories and not on the read-write layer of Docker's union file system.</p>
+
+<h3>Docker's Union File System</h3>
+
+<p>When Docker was building an image with the <a href="http://learningdocker.com/dockerfile-walkthrough/">Dockerfile</a> from <code>learningdocker/docker_quick_start</code>, Docker starts the process by first launching a container from the base image.  Each instruction in Dockerfile makes a change to the container's filesystem.  Docker commits that change as a new image and then launches another container from the new image.  The process repeats until all the instructions in the Dockerfile have been executed and produces the <code>$USER/docker_quick_start</code> image.</p>
+
+<p>When Docker launches a container from <code>$USER/docker_quick_start</code> image, Docker mounts each one of those intermediary images as read-only layers on top of the root file system.  Docker then adds an empty read-write file system on top.  The read-only layers and the read-write layer on top comprise Docker's union file system.</p>
+
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/dockerfile-build%2Brun.png" alt="image" /></p>
+
+<p>When a process creates a file, Docker adds the new file to the top read-write layer.  When a process updates an existing file in a lower read-only layer, Docker first copies the file to the top read-write layer and applies the changes to the copy.  The original file on the lower read-only layer remains unchanged.  <a href="http://www.extellisys.com/articles/docker-layer-overload">When a file is deleted, the removal is recorded on the read-write layer</a>.  The actual file on read-only layer stays and is merely hidden.</p>
+
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/edit-docker-container.png" alt="image" /></p>
+
+<h3>Mounting Code Directory as Data Volume</h3>
+
+<ol>
+<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
+<li><p>Launch the PostgreSQL database container.</p>
+
+<pre><code>Host% docker run --rm \
+--name db \
+-p ::5432 \
+-e POSTGRESQL_DB=hartl \
+-e POSTGRESQL_USER=docker \
+-e POSTGRESQL_PASS=docker \
+kamui/postgresql
+
+# --rm    Automatically remove the container when it exits.
+
+# -p      Publish a container's port to the host.  The :: notation 
+#         delegates the host port selection to Docker.
+
+# --name  Assign a name to the container.
+
+# -e      Set environment variables.
+</code></pre></li>
+<li><p>Launch the web application container.  The command below assumes the application code base resides in <code>$HOME/src/docker_quick_start</code> on the Mac OS X host.</p>
+
+<pre><code>Host% docker run -t -i \
+--name web \
+--link db:dockerdb \
+-p :49156:3000 \
+-v $HOME/src/docker_quick_start:/app \
+$USER/docker_quick_start /bin/bash
+</code></pre>
+
+<p>To get an interactive shell for the <code>web</code> application container, we have to specify the <code>-t</code> and <code>-i</code> options and provide the <code>/bin/bash</code> call at the very end of the <code>docker run</code> command.  The <code>/bin/bash</code> call will override the default startup command <code>/app/bin/start-server</code>, which is specified in the Dockerfile from the <code>LearingDocker/docker_quick_start</code> repository.</p>
+
+<pre><code># The Dockerfile's overridable startup commands
+CMD ["/app/bin/start-server"]
+</code></pre>
+
+<p>Instead of letting Docker pick a port number for us on the Boot2Docker virtual machine, we will launch this <code>web</code> application container with <code>-p :49156:3000</code>, so <code>port 49156</code> on the Boot2Docker virtual machine will map to <code>port 3000</code> inside the Docker container.</p>
+
+<pre><code># Open port 3000 on the container
+EXPOSE 3000
+</code></pre>
+
+<p>When Docker sees <code>-v $HOME/src/docker_quick_start:/app</code> in the <code>docker run</code> command, it actually expects <code>$HOME/src/docker_quick_start</code> to be on the Boot2Docker virtual machine.  Because we had shared the <code>/Users</code> directory from the Mac OS X host with the Boot2Docker virtual machine, the Mac OS X host's <code>$HOME/src/docker_quick_start</code> is actually mounted on the Boot2Docker virtual machine's <code>$HOME/src/docker_quick_start</code>, which, in turn, is mapped to the <code>/app</code> directory on the Docker container.</p>
+
+<p>One of the layers on the <code>$USER/docker_quick_start</code> image installs the Rails application code at the container's <code>/app</code> directory.  When we mount the <code>$HOME/src/docker_quick_start</code> directory from the Mac OS X host to the container's <code>/app</code> directory by way of the Boot2Docker virtual machine, the contents of the <code>$HOME/src/docker_quick_start</code> directory from the Mac OS X host will override the container's <code>/app</code> directory.  In other words, the host-mounted data volume of <code>$HOME/src/docker_quick_start</code> will take precedence over the original contents at the <code>/app</code> mount point inside the Docker container.</p>
+
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/docker-volume-mount.png" alt="image" /></p></li>
+<li><p>Once the <code>web</code> container launches successfully, we will be running an interactive shell from inside the container.  At this point, the application server is not up yet.  The application server needs to be started manually.</p>
+
+<pre><code>root@104e1b560d48:/app# /app/bin/start-server
+</code></pre>
+
+<p>The <code>/app/bin/start-server</code> script first ensures <code>/app</code> to be the working directory.  After sourcing <code>/etc/profile.d/rvm.sh</code> to load RVM, the script runs a database migration and then launches the Rails application with the Puma web server.</p>
+
+<pre><code>#!/bin/bash
+cd /app
+source /etc/profile.d/rvm.sh
+
+# Run database schema migration
+bundle exec rake db:migrate
+
+# Launch the Rails application with the Puma web server
+bundle exec rails s Puma
+</code></pre></li>
+<li><p>In a browser on the Mac OS X host, go to <code>http://localhost:49156</code>.</p>
+
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/hartl-sample-app.png" alt="image" /></p></li>
+<li><p>To prove that the container is really using the code base on the Mac OS X host, we will break the application on purpose.  In <code>app/controllers/users_controller.rb</code>, add a <code>raise 'hell'</code> to the <code>new</code> method.</p>
+
+<pre><code># app/controllers/users_controller.rb
+
+def new
+  raise 'hell'
+  @user = User.new
+end
+</code></pre></li>
+<li><p>Restart the application server and reload <code>http://localhost:49156/signup</code>.  This time, we should see a nasty error message.</p>
+
+<pre><code># Hit ctrl+c to get the shell back
+
+root@104e1b560d48:/app# /app/bin/start-server
+</code></pre>
+
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/sign-up-broken.png" alt="image" /></p></li>
+<li><p>Revert the change, restart the application server, and reload <code>http://localhost:49156/signup</code>.</p>
+
+<pre><code># app/controllers/users_controller.rb
+
+def new
+  @user = User.new
+end
+
+# Restart the 
+root@104e1b560d48:/app# /app/bin/start-server
+</code></pre>
+
+<p><img src="https://s3.amazonaws.com/learningdocker/wordpress/developing-with-docker-containers/sign-up.png" alt="image" /></p></li>
+<li><p>Exit and remove the <code>web</code> container.  Beause the <code>web</code> container was not launched with the <code>--rm</code> option, the exited container is not automatically removed.</p>
+
+<pre><code># Exit the Rails Application Container
+root@104e1b560d48:/app# exit
+
+# Remove the Rails Application Container
+Host% docker rmi web
+</code></pre></li>
+<li><p> Stop the <code>db</code> container.</p>
+
+<pre><code># Stop the PostgreSQL Database Container
+Host% docker stop db
+</code></pre></li>
+</ol>

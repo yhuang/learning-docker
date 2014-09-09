@@ -28,7 +28,8 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 	             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
 	
 	docker@boot2docker:~$ docker run --rm \
-	-v /var/lib/boot2docker:/target jpetazzo/nsenter
+	-v /var/lib/boot2docker:/target \
+	jpetazzo/nsenter
 	
 	Installing nsenter to /target
 	Installing docker-enter to /target

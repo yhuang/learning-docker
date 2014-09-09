@@ -47,38 +47,32 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 
 	```	
 	Host% time docker build -t $DOCKERUSER/docker_quick_start .
-	Sending build context to Docker daemon 1.505 MB
+	Sending build context to Docker daemon   6.3 MB
 	Sending build context to Docker daemon 
 	Step 0 : FROM debian:jessie
-	Pulling repository debian
-	431dac4e3917: Download complete 
-	511136ea3c5a: Download complete 
-	a70fb0647e6e: Download complete 
 	 ---> 431dac4e3917
 	Step 1 : MAINTAINER Learning Docker <jimmy.huang@learningdocker.com>
-	 ---> Running in b7e69ec93d59
-	 ---> 9ce1ff063603
-	Removing intermediate container b7e69ec93d59
+	 ---> Running in 8bedc332ec3e
+	 ---> bf6e66ab7ba8
+	Removing intermediate container 8bedc332ec3e
 	Step 2 : RUN apt-get update && apt-get install -qy \
-	 curl git libpq-dev libprocps3 libprocps3-dev nodejs postgresql procps
-	 ---> Running in 5369bbee7a61
-	Upgrading Debian packages already installed
-	
-	Downloading and installing Debian packages 
-	in the RUN instruction and their dependencies
-	 ---> a9f3925e86a6
-	Removing intermediate container 5369bbee7a61
+	         curl  git  libpq-dev  libprocps3  libprocps3-dev \
+	         nodejs  postgresql  procps
+	 ---> Running in 79a5bd4eadb3
+	 ---> 414985d91f17
+	Removing intermediate container 79a5bd4eadb3
 	Step 3 : RUN curl -sSL https://get.rvm.io | bash -s stable
-	 ---> Running in 6d0fef8a067f
+	 ---> Running in 26c4f921b49b
 	Downloading https://github.com/wayneeseguin/rvm/archive/stable.tar.gz
+	Creating group 'rvm'
 	Installing RVM to /usr/local/rvm/
-	 ---> 1dd60b90bb1b
-	Removing intermediate container 6d0fef8a067f
+	 ---> f6c04b16f9a3
+	Removing intermediate container 26c4f921b49b
 	Step 4 : RUN ["/bin/bash", "-l", "-c", 
 	              "rvm requirements; 
 	              rvm install 2.1.2; 
 	              gem install bundler --no-ri --no-rdoc"]
-	 ---> Running in 7983ef880f73
+	 ---> Running in ede144850d97
 	Checking requirements for debian.
 	Installing requirements for debian.
 	Updating system..
@@ -106,22 +100,22 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	ruby-2.1.2 - #importing gemsetfile /usr/local/rvm/gemsets/default.gems 
 	             evaluated to empty gem list
 	ruby-2.1.2 - #generating default wrappers........
-	Successfully installed bundler-1.6.5
+	Successfully installed bundler-1.7.2
 	1 gem installed
-	 ---> 1c27744233bc
-	Removing intermediate container 7983ef880f73
+	 ---> 20530f4640b2
+	Removing intermediate container ede144850d97
 	Step 5 : COPY Gemfile /app/Gemfile
-	 ---> 49df2bda31e0
-	Removing intermediate container d35914bdd291
+	 ---> b4a579d1f1f3
+	Removing intermediate container b99cac9a1867
 	Step 6 : COPY Gemfile.lock /app/Gemfile.lock
-	 ---> 2e42214a73fd
-	Removing intermediate container e3478ee33811
+	 ---> 0ee1481ca560
+	Removing intermediate container d92be5f63e65
 	Step 7 : WORKDIR /app
-	 ---> Running in a5d240ae639e
-	 ---> 59d5871db18b
-	Removing intermediate container a5d240ae639e
+	 ---> Running in 37c0323f847b
+	 ---> 2d37b923faf9
+	Removing intermediate container 37c0323f847b
 	Step 8 : RUN ["/bin/bash", "-l", "-c", "bundle install"]
-	 ---> Running in a430cb96a6cf
+	 ---> Running in a5744cc0142e
 	Installing gems specified in the Gemfile
 	Your bundle is complete!
 	
@@ -129,31 +123,24 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	 = 1.8.7 : gem install rdoc-data; rdoc-data --install
 	 = 1.9.1 : gem install rdoc-data; rdoc-data --install
 	>= 1.9.2 : nothing to do! Yay!
-	 ---> 7ecb9e9182eb
-	Removing intermediate container a430cb96a6cf
+	 ---> 1c18d721dd22
+	Removing intermediate container a5744cc0142e
 	Step 9 : ADD . /app
-	 ---> 32cd50a4f4c0
-	Removing intermediate container 0a9f5038b38a
-	Step 10 : COPY config/container/start-server.sh /usr/bin/start-server
-	 ---> f58f16a503e3
-	Removing intermediate container 4c9408bb70e8
-	Step 11 : RUN chmod +x /usr/bin/start-server
-	 ---> Running in 60b34f80c640
-	 ---> c18bb67237cd
-	Removing intermediate container 60b34f80c640
-	Step 12 : EXPOSE 3000
-	 ---> Running in 0df7cc5c63f4
-	 ---> a17e78e23b90
-	Removing intermediate container 0df7cc5c63f4
-	Step 13 : CMD ["/usr/bin/start-server"]
-	 ---> Running in dcdba9afcffc
-	 ---> baa539e0e7af
-	Removing intermediate container dcdba9afcffc
-	Successfully built baa539e0e7af
+	 ---> 84224a27c2f0
+	Removing intermediate container 0515622b4ed8
+	Step 10 : EXPOSE 3000
+	 ---> Running in 146029e01521
+	 ---> be55e982050d
+	Removing intermediate container 146029e01521
+	Step 11 : CMD ["/app/bin/start-server"]
+	 ---> Running in 1c9b26a605da
+	 ---> 25eaf04c070f
+	Removing intermediate container 1c9b26a605da
+	Successfully built 25eaf04c070f
 	
-	real	17m37.900s
-	user	0m0.061s
-	sys	    0m0.058s
+	real	7m24.547s
+	user	0m0.055s
+	sys	0m0.051s
 	```
 
 6.  See what images got built.
@@ -161,7 +148,7 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	```
 	Host% docker images
 	REPOSITORY                      TAG     IMAGE ID      VIRTUAL SIZE
-	$DOCKERUSER/docker_quick_start  latest  baa539e0e7af  765.3 MB
+	$DOCKERUSER/docker_quick_start  latest  25eaf04c070f  796.7 MB
 	debian                          jessie  431dac4e3917  90.08 MB
 	jpetazzo/nsenter                latest  1084fe82d2fe  323.4 MB
 	kamui/postgresql                latest  249dad1e2537  387.5 MB
@@ -172,87 +159,76 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	```
 	Host$ docker history $DOCKERUSER/docker_quick_start
 	IMAGE         CREATED BY                                        SIZE
-	baa539e0e7af  /bin/sh -c #(nop) CMD [/usr/bin/start-server]     0 B
-	a17e78e23b90  /bin/sh -c #(nop) EXPOSE map[3000/tcp:{}]         0 B
-	c18bb67237cd  /bin/sh -c chmod +x /usr/bin/start-server         191 B
-	f58f16a503e3  /bin/sh -c #(nop) COPY file:8afcdbd735a94d703
-	              /usr/bin/start-server                             191 B
-	32cd50a4f4c0  /bin/sh -c #(nop) ADD dir:ee1c51c599d1ff1ad19
-	              in /app                                           1.339 MB
-	7ecb9e9182eb  /bin/sh -c /bin/bash -l -c "bundle install"       155.8 MB
-	59d5871db18b  /bin/sh -c #(nop) WORKDIR /app                    0 B
-	2e42214a73fd  /bin/sh -c #(nop) COPY file:3a3f329c666dbce04
+	25eaf04c070f  /bin/sh -c #(nop) CMD [/app/bin/start-server]     0 B
+	be55e982050d  /bin/sh -c #(nop) EXPOSE map[3000/tcp:{}]         0 B
+	84224a27c2f0  /bin/sh -c #(nop) ADD dir:b90cb58b63462c3c0a0
+	              in /app                                           6.029 MB
+	1c18d721dd22  /bin/sh -c /bin/bash -l -c "bundle install"       155.8 MB
+	2d37b923faf9  /bin/sh -c #(nop) WORKDIR /app                    0 B
+	0ee1481ca560  /bin/sh -c #(nop) COPY file:3a3f329c666dbce04
 	              /app/Gemfile.lock                                 6.054 kB
-	49df2bda31e0  /bin/sh -c #(nop) COPY file:afdf4c2baf9660cfc  
+	b4a579d1f1f3  /bin/sh -c #(nop) COPY file:afdf4c2baf9660cfc  
 	              in /app/Gemfile                                   1.287 kB
-	1c27744233bc  /bin/bash -l -c rvm requirements; 
+	20530f4640b2  /bin/bash -l -c rvm requirements; 
 	              rvm install 2.1.2; gem install bundler --no-ri 
-	              --no-rdoc                                         192.4 MB
-	1dd60b90bb1b  /bin/sh -c curl -sSL https://get.rvm.io | 
-	              bash -s stable                                    7.718 MB
-	a9f3925e86a6  /bin/sh -c apt-get update && apt-get install 
+	              --no-rdoc                                         263 MB
+	f6c04b16f9a3  /bin/sh -c curl -sSL https://get.rvm.io | 
+	              bash -s stable                                    7.732 MB
+	414985d91f17  /bin/sh -c apt-get update && apt-get install 
 	              -qy curl git libpq-dev libprocps3 libprocps3-dev 
-	              nodejs postgresql procps                          332.7 MB
-	9ce1ff063603  /bin/sh -c #(nop) MAINTAINER Learning Docker      0 B
+	              nodejs postgresql procps                          274 MB
+	bf6e66ab7ba8  /bin/sh -c #(nop) MAINTAINER Learning Docker      0 B
 	431dac4e3917  /bin/sh -c #(nop) CMD [/bin/bash]                 0 B
 	a70fb0647e6e  /bin/sh -c #(nop) ADD file:29e52cbeed164d50b3
-	              in /                                              89.59 MB
+	              in /                                              90.08 MB
 	511136ea3c5a                                                    0 B
 	```
 
 8.  Run `docker build` on the same Dockerfile again.  This time `docker build` was able to take advantage of its image cache and complete the build in just a little bit over one second.
 
 	```
-	Host% time docker build -t $DOCKERUSER/docker_quick_start .
-	Sending build context to Docker daemon 1.511 MB
+	Sending build context to Docker daemon   6.3 MB
 	Sending build context to Docker daemon 
 	Step 0 : FROM debian:jessie
 	 ---> 431dac4e3917
 	Step 1 : MAINTAINER Learning Docker <jimmy.huang@learningdocker.com>
 	 ---> Using cache
-	 ---> 9ce1ff063603
-	Step 2 : RUN apt-get update && apt-get install -qy \
-	 curl git libpq-dev libprocps3 libprocps3-dev nodejs postgresql procps
+	 ---> bf6e66ab7ba8
+	Step 2 : RUN apt-get update && apt-get install -qy  curl  git  libpq-dev  libprocps3  libprocps3-dev  nodejs  postgresql  procps
 	 ---> Using cache
-	 ---> a9f3925e86a6
+	 ---> 414985d91f17
 	Step 3 : RUN curl -sSL https://get.rvm.io | bash -s stable
 	 ---> Using cache
-	 ---> 1dd60b90bb1b
+	 ---> f6c04b16f9a3
 	Step 4 : RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install bundler --no-ri --no-rdoc"]
 	 ---> Using cache
-	 ---> 1c27744233bc
+	 ---> 20530f4640b2
 	Step 5 : COPY Gemfile /app/Gemfile
 	 ---> Using cache
-	 ---> 49df2bda31e0
+	 ---> b4a579d1f1f3
 	Step 6 : COPY Gemfile.lock /app/Gemfile.lock
 	 ---> Using cache
-	 ---> 2e42214a73fd
+	 ---> 0ee1481ca560
 	Step 7 : WORKDIR /app
 	 ---> Using cache
-	 ---> 59d5871db18b
+	 ---> 2d37b923faf9
 	Step 8 : RUN ["/bin/bash", "-l", "-c", "bundle install"]
 	 ---> Using cache
-	 ---> 7ecb9e9182eb
+	 ---> 1c18d721dd22
 	Step 9 : ADD . /app
 	 ---> Using cache
-	 ---> 32cd50a4f4c0
-	Step 10 : COPY config/container/start-server.sh /usr/bin/start-server
+	 ---> 84224a27c2f0
+	Step 10 : EXPOSE 3000
 	 ---> Using cache
-	 ---> f58f16a503e3
-	Step 11 : RUN chmod +x /usr/bin/start-server
+	 ---> be55e982050d
+	Step 11 : CMD ["/app/bin/start-server"]
 	 ---> Using cache
-	 ---> c18bb67237cd
-	Step 12 : EXPOSE 3000
-	 ---> Using cache
-	 ---> a17e78e23b90
-	Step 13 : CMD ["/usr/bin/start-server"]
-	 ---> Using cache
-	 ---> baa539e0e7af
-	Successfully built baa539e0e7af
+	 ---> 25eaf04c070f
+	Successfully built 25eaf04c070f
 	
-	real	0m0.206s
-	user	0m0.014s
-	sys	    0m0.036s
+	real	0m0.648s
+	user	0m0.015s
+	sys	0m0.024s
 	```
 	
 9.	Push the newly created Docker image to your Docker Hub account.

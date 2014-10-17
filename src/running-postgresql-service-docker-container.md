@@ -12,8 +12,8 @@
 	# -s, --stars=0        Only displays with at least x stars
 	
 	NAME                    DESCRIPTION                      STARS  OFFICIAL
-	helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    12
-	jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   5
+	helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    18
+	jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   6
 	kamui/postgresql        PostgreSQL 9.3 with configura    5
 	```
 	

@@ -55,7 +55,6 @@
 	--name example \
 	--link db:dockerdb \
 	learningdocker/docker_quick_start env
-	HOME=/
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 	HOSTNAME=7775474b902d
 	DOCKERDB_PORT=tcp://172.17.0.6:5432
@@ -63,13 +62,14 @@
 	DOCKERDB_PORT_5432_TCP_ADDR=172.17.0.6
 	DOCKERDB_PORT_5432_TCP_PORT=5432
 	DOCKERDB_PORT_5432_TCP_PROTO=tcp
-	DOCKERDB_NAME=/tmp/bleacher_report
+	DOCKERDB_NAME=/example/dockerdb
+	DOCKERDB_ENV_POSTGRESQL_DB=hartl
 	DOCKERDB_ENV_POSTGRESQL_USER=docker
 	DOCKERDB_ENV_POSTGRESQL_PASS=docker
-	DOCKERDB_ENV_POSTGRESQL_DB=hartl
 	DOCKERDB_ENV_LANGUAGE=en_US.UTF-8
 	DOCKERDB_ENV_LANG=en_US.UTF-8
-	DOCKERDB_ENV_LC_ALL=en_US.UTF-8	
+	DOCKERDB_ENV_LC_ALL=en_US.UTF-8
+	HOME=/root
 	```
 	
 5.  Assuming that `nsenter` and `docker-enter` have been installed on the Boot2Docker virtual machine and that the `docker-enter` shell function has been added to your `.profile`, we can explore what is inside this Rails application container by shelling into it.
@@ -106,31 +106,27 @@
 	SHELL=/bin/bash
 	TERM=xterm-256color
 	IRBRC=/usr/local/rvm/rubies/ruby-2.1.2/.irbrc
+	OLDPWD=/root
 	MY_RUBY_HOME=/usr/local/rvm/rubies/ruby-2.1.2
 	USER=root
 	_system_type=Linux
 	rvm_path=/usr/local/rvm
 	rvm_prefix=/usr/local
 	MAIL=/var/mail/root
-	PATH=/usr/local/rvm/gems/ruby-2.1.2/bin:
-	     /usr/local/rvm/gems/ruby-2.1.2@global/bin:
-	     /usr/local/rvm/rubies/ruby-2.1.2/bin:
-	     /usr/local/sbin:
-	     /usr/local/bin:
-	     /usr/sbin:
-	     /usr/bin:
-	     /sbin:/bin:
-	     /usr/local/rvm/bin
-	PWD=/root
+	PATH=/usr/local/rvm/gems/ruby-2.1.2/bin:/usr/local/rvm/gems/ruby-2.1.2@global/bin:
+	     /usr/local/rvm/rubies/ruby-2.1.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:
+	     /usr/bin:/sbin:/bin:/usr/local/rvm/bin
+	PWD=/
 	_system_arch=x86_64
 	_system_version=jessie_sid
-	rvm_version=1.25.28 (stable)
+	rvm_version=1.25.33 (stable)
 	SHLVL=1
 	HOME=/root
 	LOGNAME=root
 	GEM_PATH=/usr/local/rvm/gems/ruby-2.1.2:/usr/local/rvm/gems/ruby-2.1.2@global
 	RUBY_VERSION=ruby-2.1.2
 	_system_name=Debian
+	_=/usr/bin/env
 
 	```
 	
@@ -142,21 +138,21 @@
 	#
 	# List all the environment variables of PID 1
 	root@7775474b902d:~# cat /proc/1/environ | sed 's/\x0/\n/g'
-	HOME=/
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-	HOSTNAME=7775474b902d
+	HOSTNAME=790c759a69e0
 	DOCKERDB_PORT=tcp://172.17.0.6:5432
 	DOCKERDB_PORT_5432_TCP=tcp://172.17.0.6:5432
 	DOCKERDB_PORT_5432_TCP_ADDR=172.17.0.6
 	DOCKERDB_PORT_5432_TCP_PORT=5432
 	DOCKERDB_PORT_5432_TCP_PROTO=tcp
-	DOCKERDB_NAME=/tmp/bleacher_report
+	DOCKERDB_NAME=/web/dockerdb
+	DOCKERDB_ENV_POSTGRESQL_DB=hartl
 	DOCKERDB_ENV_POSTGRESQL_USER=docker
 	DOCKERDB_ENV_POSTGRESQL_PASS=docker
-	DOCKERDB_ENV_POSTGRESQL_DB=hartl
 	DOCKERDB_ENV_LANGUAGE=en_US.UTF-8
 	DOCKERDB_ENV_LANG=en_US.UTF-8
-	DOCKERDB_ENV_LC_ALL=en_US.UTF-8	
+	DOCKERDB_ENV_LC_ALL=en_US.UTF-8
+	HOME=/root
 	```
 	
 8.  Stop the containers in another console with its environment variable `DOCKER_HOST` set.

@@ -7,7 +7,6 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 1.  Install `nsenter` and `docker-enter` into `/var/lib/boot2docker/` on the Boot2Docker virtual machine.
 
 	```
-	Host% boot2docker ssh
 	                        ##        .
 	                  ## ## ##       ==
 	               ## ## ## ##      ===
@@ -21,11 +20,8 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 	| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
-	
-	  boot2docker with VirtualBox guest additions version 4.3.14
-	
-	boot2docker: 1.2.0
-	             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
+	boot2docker: 1.3.0
+	             master : a083df4 - Thu Oct 16 17:05:03 UTC 2014
 	
 	docker@boot2docker:~$ docker run --rm \
 	-v /var/lib/boot2docker:/target \

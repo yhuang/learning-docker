@@ -114,19 +114,15 @@ Finished in 6.39 seconds
 | '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|
 | |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   &lt;  __/ |
 |_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
-
-  boot2docker with VirtualBox guest additions version 4.3.14
-
-boot2docker: 1.2.0
-             master : e75396e - Fri Aug 22 06:03:48 UTC 2014
-
-
+boot2docker: 1.3.0
+             master : a083df4 - Thu Oct 16 17:05:03 UTC 2014
 docker@boot2docker:~$ netstat -nr | grep '^0\.0\.0\.0' | awk '{print $2}'
 10.0.2.2
 </code></pre></li>
 <li><p>Launch the Rails application container from the Docker image <code>$USER/docker_quick_start</code>.</p>
 
-<pre><code>Host% docker run --rm -P --name web \
+<pre><code>Host% docker run --rm -P \
+--name web \
 -e DOCKERDB_ENV_POSTGRESQL_DB=hartl_development \
 -e DOCKERDB_ENV_POSTGRESQL_USER=docker \
 -e DOCKERDB_ENV_POSTGRESQL_PASS=docker \
@@ -149,6 +145,6 @@ Host% docker stop web
 </ol>
 
 
-<h3>Summary</h3>
+<h4>Summary</h4>
 
 <p>In this section, we created a PostgreSQL database on the Mac OS X host and accessed it from a dockerized Rails application on the Boot2Docker virtual machine.  This setup is the inverse of what we did earlier, where we launched PostgreSQL Service as a Docker Container on the Boot2Docker virtual machine and logged onto it from the Mac OS X host.  What made this example interesting is how we established connection from a Docker container on the Boot2Docker virtual machine to the Mac OS X host via Boot2Docker virtual machine's default gateway.</p>

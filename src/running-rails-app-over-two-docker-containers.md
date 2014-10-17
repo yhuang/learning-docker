@@ -57,8 +57,8 @@
 	
 	Host% docker images
 	REPOSITORY                         TAG     IMAGE ID      VIRTUAL SIZE
-	learningdocker/docker_quick_start  latest  223ac352ac09  781 MB
-	jpetazzo/nsenter                   latest  1084fe82d2fe  323.4 MB
+	learningdocker/docker_quick_start  latest  bbdfb8c5dab3  805.2 MB
+	jpetazzo/nsenter                   latest  f495905a2670  365.7 MB
 	kamui/postgresql                   latest  249dad1e2537  387.5 MB
 	```
 

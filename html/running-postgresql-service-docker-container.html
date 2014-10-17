@@ -11,15 +11,16 @@
 # -s, --stars=0        Only displays with at least x stars
 
 NAME                    DESCRIPTION                      STARS  OFFICIAL
-helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    12
-jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   5
+helmi03/docker-postgis  PostGIS 2.1 in PostgreSQL 9.3    18
+jamesbrink/postgresql   A simple PostgreSQL 9.3 contai   6
 kamui/postgresql        PostgreSQL 9.3 with configura    5
 </code></pre>
 
 <p>We will use the <a href="https://registry.hub.docker.com/u/kamui/postgresql/"><code>kamui/postgresql</code></a> image throughout this tutorial.</p></li>
 <li><p>Launch a PostgreSQL service container from the <code>kamui/postgresql</code> image:</p>
 
-<pre><code>Host% docker run -p ::5432 --name db \
+<pre><code>Host% docker run -p ::5432 \
+--name db \
 -e POSTGRESQL_DB=hartl \
 -e POSTGRESQL_USER=docker \
 -e POSTGRESQL_PASS=docker \
@@ -87,6 +88,6 @@ Host% docker rm `dlc`
 </ol>
 
 
-<h3>Summary</h3>
+<h4>Summary</h4>
 
 <p>Docker, Inc. published a <a href="https://docs.docker.com/examples/postgresql_service/">detailed tutorial</a> to demonstrate how easy dockerizing system services like PostgreSQL can be.  We launched a public Docker image built in a way that is similar to the tutorial, so we may introduce some basic Docker commands and frequently used command options.  In the process, we showed how the Mac OS X host can connect to a dockerized PostgreSQL service on the Boot2Docker virtual machine.</p>

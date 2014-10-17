@@ -98,7 +98,7 @@
 	# OR if the alias "dlc" has been defined to be "docker ps -l -q"
 	
 	Host% docker rm `dlc`
-	```
+	```		
 
 ####Summary
 

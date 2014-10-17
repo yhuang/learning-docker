@@ -6,7 +6,8 @@
 <li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
 <li><p>Launch the PostgreSQL database container.</p>
 
-<pre><code>Host% docker run --rm -p ::5432 --name db \
+<pre><code>Host% docker run --rm -p ::5432 \
+--name db \
 -e POSTGRESQL_DB=hartl \
 -e POSTGRESQL_USER=docker \
 -e POSTGRESQL_PASS=docker \
@@ -49,13 +50,14 @@ Host% docker inspect --format '{{.NetworkSettings.IPAddress}}' db
 
 Host% docker images
 REPOSITORY                         TAG     IMAGE ID      VIRTUAL SIZE
-learningdocker/docker_quick_start  latest  223ac352ac09  781 MB
-jpetazzo/nsenter                   latest  1084fe82d2fe  323.4 MB
+learningdocker/docker_quick_start  latest  bbdfb8c5dab3  805.2 MB
+jpetazzo/nsenter                   latest  f495905a2670  365.7 MB
 kamui/postgresql                   latest  249dad1e2537  387.5 MB
 </code></pre></li>
 <li><p>Launch the Rails application container from the newly built Docker image <code>learningdocker/docker_quick_start</code>.</p>
 
-<pre><code>Host% docker run --rm -P --name web \
+<pre><code>Host% docker run --rm -P \
+--name web \
 -e DOCKERDB_ENV_POSTGRESQL_DB=hartl \
 -e DOCKERDB_ENV_POSTGRESQL_USER=docker \
 -e DOCKERDB_ENV_POSTGRESQL_PASS=docker \
@@ -72,10 +74,10 @@ learningdocker/docker_quick_start
 # -e      Set environment variables
 </code></pre>
 
-<p>The new container named <code>web</code> will ultimately execute the script <code>/usr/bin/start-server</code> on its filesystem.</p>
+<p>The new container named <code>web</code> will ultimately execute the script <code>/app/bin/start-server</code> on its filesystem.</p>
 
 <pre><code>Host% docker-enter web
-root@a6bdcfbc845b# more /usr/bin/start-server                 
+root@a6bdcfbc845b# more /app/bin/start-server                 
 #!/bin/bash
 cd /app
 source /etc/profile.d/rvm.sh
@@ -124,7 +126,8 @@ Host% docker stop `dlc`
 <li><p> For containers that run on the same Boot2Docker virtual machine, Docker provides a <a href="https://docs.docker.com/userguide/dockerlinks/">linking system</a> that lets multiple containers work together and share connection information amongst each other.</p>
 
 <pre><code># Without Linking (Do NOT Run)
-Host% docker run --rm -P --name web \
+Host% docker run --rm -P \
+--name web \
 -e DOCKERDB_ENV_POSTGRESQL_DB=hartl \
 -e DOCKERDB_ENV_POSTGRESQL_USER=docker \
 -e DOCKERDB_ENV_POSTGRESQL_PASS=docker \
@@ -136,8 +139,10 @@ learningdocker/docker_quick_start
 <p>When the <code>--link</code> option is invoked in a <code>docker run</code> command, Docker will automatically create a series of environment variables with relevant information about the container specified by the <code>--link</code> option.  All these environment variables will be prefixed by the container alias.  The environment variables <code>DOCKERDB_ENV_POSTGRESQL_DB</code>, <code>DOCKERDB_ENV_POSTGRESQL_USER</code>, <code>DOCKERDB_ENV_POSTGRESQL_PASS</code>, <code>DOCKERDB_PORT_5432_TCP_ADDR</code>, and <code>DOCKERDB_PORT_5432_TCP_PORT</code> may all be omitted.</p>
 
 <pre><code># With Linking (Run)
-Host% docker run --rm -P --name web \
---link db:dockerdb learningdocker/docker_quick_start
+Host% docker run --rm -P \
+--name web \
+--link db:dockerdb \
+learningdocker/docker_quick_start
 
 # --link  Add link to another container 
 #         (container_name:container_alias).
@@ -147,8 +152,10 @@ Host% docker run --rm -P --name web \
 </code></pre></li>
 <li><p> To see what Docker is doing better, we will launch the <code>learningdocker/docker_quick_start</code> image and run the <code>env</code> command to enumerate all environment variables on the container.  The container alias in this case is <code>bleacher_report</code>, so all the environment variables inside the container are prefixed with <code>BLEACHER_REPORT_</code>.</p>
 
-<pre><code>Host% docker run --rm --name example \
---link db:bleacher_report learningdocker/docker_quick_start env
+<pre><code>Host% docker run --rm \
+--name example \
+--link db:bleacher_report \
+learningdocker/docker_quick_start env
 HOME=/
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=7775474b902d
@@ -220,7 +227,7 @@ Host% docker stop db
 </ol>
 
 
-<h3>Summary</h3>
+<h4>Summary</h4>
 
 <p>By launching an application container and a database container from the Boot2Docker virtual machine, we effectively deployed a fully functional web application on our local Mac OS X host.  For the two containers to work together as part of a web application, the application container has to know about the database container.</p>
 

@@ -2,6 +2,8 @@
 
 <p>To understand what the Dockerfile from the <code>LearningDocker/docker_quick_start</code> repository is doing, we will be stepping through it line by line.  In the process, we will become more familiar with the domain specific language (DSL) that powers Dockerfiles.</p>
 
+<!--more-->
+
 <pre><code>FROM debian:jessie
 
 MAINTAINER Learning Docker &lt;jimmy.huang@learningdocker.com&gt;
@@ -107,6 +109,6 @@ RUN ["/bin/bash", "-l", "-c", "bundle install"]
 
 <p>The <code>CMD</code> instruction provides the default command to run when the container is launched.  In this Dockerfile, the container will execute <code>/app/bin/start-server</code> and fire up the Rails application at launch.</p>
 
-<h4>Summary</h4>
+<h3>Summary</h3>
 
 <p>By stepping through the Dockerfle from the <code>LearningDocker/docker_quick_start</code> repository line by line, we have become familiar with common Dockerfile instructions like <code>ADD</code>, <code>RUN</code>, <code>WORKDIR</code>, and <code>CMD</code> and saw how these instructions can be used to build Docker images one layer at a time.  To learn more about Dockerfiles, please check out Docker, Inc.'s <a href="https://docs.docker.com/reference/builder/">Dockerfile Reference</a>.</p>

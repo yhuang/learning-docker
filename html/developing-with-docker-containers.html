@@ -2,11 +2,13 @@
 
 <p>For Docker to deliver on that promise of consistent development and deployment, a developer should be able to work on the same container that will be shipped to production.  One way for a developer to accomplish this goal is to build the application's Docker image, launch the resulting Docker image, and check out the dockerized application on the development machine every time the code changes.  Although each round of the Docker image rebuild can be sped up dramatically with proper caching, this workflow remains tedious and awkward.</p>
 
+<!--more-->
+
 <p>A better way to integrate Docker into a programmer's development workflow is to leverage data volumes.  <a href="http://crosbymichael.com/advanced-docker-volumes.html">Data volumes</a> are simply local host directories that enable data persistance and sharing across multiple containers.  These specially designated directories are mounted at specific paths inside the container.  In the context of application development workflow, the rapidly changing code base will be mounted from the developer's local host machine onto the container via Docker's volume option <code>-v</code>.  The container used in development would be launched with an interactive Bash shell, so the developer can restart the application server at will from inside the container.  Changes to the code base on the data volume are made directly on the local host directories and not on the read-write layer of Docker's union file system.</p>
 
 <h3>Docker's Union File System</h3>
 
-<p>When Docker was building an image with the <a href="http://learningdocker.com/dockerfile-walkthrough/">Dockerfile</a> from <code>learningdocker/docker_quick_start</code>, Docker starts the process by first launching a container from the base image.  Each instruction in Dockerfile makes a change to the container's filesystem.  Docker commits that change as a new image and then launches another container from the new image.  The process repeats until all the instructions in the Dockerfile have been executed and produces the <code>$USER/docker_quick_start</code> image.</p>
+<p>When Docker was building an image with the <a href="http://learningdocker.com/dockerfile-walkthrough-legacy/">Dockerfile</a> from <code>learningdocker/docker_quick_start</code>, Docker starts the process by first launching a container from the base image.  Each instruction in Dockerfile makes a change to the container's filesystem.  Docker commits that change as a new image and then launches another container from the new image.  The process repeats until all the instructions in the Dockerfile have been executed and produces the <code>$USER/docker_quick_start</code> image.</p>
 
 <p>When Docker launches a container from <code>$USER/docker_quick_start</code> image, Docker mounts each one of those intermediary images as read-only layers on top of the root file system.  Docker then adds an empty read-write file system on top.  The read-only layers and the read-write layer on top comprise Docker's union file system.</p>
 
@@ -19,7 +21,7 @@
 <h3>Mounting Code Directory as Data Volume</h3>
 
 <ol>
-<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
+<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks-legacy/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
 <li><p>Launch the PostgreSQL database container.</p>
 
 <pre><code>Host% docker run --rm \

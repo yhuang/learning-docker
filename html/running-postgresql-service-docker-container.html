@@ -1,9 +1,11 @@
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/running-postgresql-service-docker-container/dockerized-postgresql-database-mac-os-x-boot2docker.jpg" alt="image" /></p>
 
-<p>Docker, Inc. has published a <a href="https://docs.docker.com/examples/postgresql_service/">detailed tutorial on Dockerizing PostgreSQL</a>.  To keep the length of this tutorial manageable, we will simply use a <a href="https://github.com/kamui/docker-postgresql">publicly available Docker image</a> hosted on <a href="https://hub.docker.com/">Docker Hub</a>.  We leave Docker’s official example as an exercise for readers who want a deeper understanding of how Docker containerizes the PostgreSQL service.  The goal of this section is simply to introduce some basic Docker commands and frequently used command options.</p>
+<p>Docker, Inc. has published a <a href="https://docs.docker.com/examples/postgresql_service/">detailed tutorial on Dockerizing PostgreSQL</a>.  To keep the length of this tutorial manageable, we will simply use a <a href="https://github.com/kamui/docker-postgresql">publicly available Docker image</a> hosted on <a href="https://hub.docker.com/">Docker Hub</a>.  We leave Docker’s official example as an exercise for readers who want a deeper understanding of how Docker containerizes the PostgreSQL service.  The goal of this section is to introduce some basic Docker commands and frequently used command options.</p>
+
+<!--more-->
 
 <ol>
-<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure that the system is properly configured.</p></li>
+<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks-legacy/">Preflight Checks</a></em> to ensure that the system is properly configured.</p></li>
 <li><p>Search for a PostgreSQL 9.3 Docker image that has at least 5 stars.</p>
 
 <pre><code>Host% docker search --stars=5 "postgresql-9.3"
@@ -32,7 +34,7 @@ kamui/postgresql
 
 # -e      Set environment variables.
 </code></pre></li>
-<li><p>Make sure the PostgreSQL Docker container is up and running with <code>docker ps -a</code>.  In this example, Docker has mapped <code>port 49153</code> on the Boot2Docker virtual machine to <code>port 5432</code>. on the newly started <code>db</code> container.</p>
+<li><p>Make sure the PostgreSQL Docker container is up and running with <code>docker ps -a</code>.  In this example, Docker has mapped <code>port 49153</code> on the Boot2Docker virtual machine to <code>port 5432</code> on the newly started <code>db</code> container.</p>
 
 <pre><code>Host% docker ps -a
 CONTAINER ID  IMAGE             STATUS  PORTS        NAMES

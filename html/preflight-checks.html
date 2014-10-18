@@ -15,6 +15,9 @@ Started.
 To connect the Docker client to the Docker daemon, please set:
     export DOCKER_HOST=tcp://192.168.59.103:2375
 </code></pre></li>
+
+<!--more-->
+
 <li><p>Make sure the Docker daemon is running on the Boot2Docker virtual machine.</p>
 
 <pre><code>Host% docker info
@@ -36,6 +39,7 @@ Init Path: /usr/local/bin/docker
 Username: $USER
 Registry: [https://index.docker.io/v1/]
 </code></pre></li>
+
 <li><p>In order for a terminal to connect to the Docker daemon, the <code>DOCKER_HOST</code> environment variable must be set properly.  New terminals are not launched with the <code>DOCKER_HOST</code> environment variable initialized automatically, so they will not know how to connect to the Docker daemon by default.</p>
 
 <pre><code># If the DOCKER_HOST environment variable is not set:

@@ -2,8 +2,10 @@
 
 <p>As exciting as running a PostgreSQL server inside a Docker container may be, what usually sells Docker to developers is seeing how Docker handles their favorite web applications.  In this section, we will launch a fully functional Rails application over two Docker containers.  One container will house the PostgreSQL server, and the other container will host the application code forked from a project developed and maintained by Michael Hartl for his self-paced learning program <a href="http://www.railstutorial.org/">Ruby on Rails Tutorial: Learn Web Development with Rails</a>.</p>
 
+<!--more-->
+
 <ol>
-<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
+<li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks-legacy/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
 <li><p>Launch the PostgreSQL database container.</p>
 
 <pre><code>Host% docker run --rm -p ::5432 --name db \
@@ -43,7 +45,7 @@ Host% docker inspect --format '{{.NetworkSettings.IPAddress}}' db
 </code></pre></li>
 <li><p>Before we can run the dockerized Rails application, we must build a Docker image on the Boot2Docker virtual machine first with the application's Dockerfle.  A Dockerfle is simply a plain text file that includes all the instructions to the Docker daemon on how to make that image.</p>
 
-<p>The image building process can take a while to complete, especially on a slow network.  To keep the focus on running a Rails application over two Docker containers for now, we will pull the <a href="https://registry.hub.docker.com/u/learningdocker/docker_quick_start/"><code>learningdocker/docker_quick_start</code></a> image from Docker Hub.  We will wait until <em><a href="http://learningdocker.com/building-images-with-dockerfiles/">Building Images with Dockerfiles</a></em> to generate the Rails application's Docker image on the Boot2Docker virtual machine ourselves.</p>
+<p>The image building process can take a while to complete, especially on a slow network.  To keep the focus on running a Rails application over two Docker containers for now, we will pull the <a href="https://registry.hub.docker.com/u/learningdocker/docker_quick_start/"><code>learningdocker/docker_quick_start</code></a> image from Docker Hub.  We will wait until <em><a href="http://learningdocker.com/building-images-with-dockerfiles-legacy/">Building Images with Dockerfiles</a></em> to generate the Rails application's Docker image on the Boot2Docker virtual machine ourselves.</p>
 
 <pre><code>Host% docker pull learningdocker/docker_quick_start
 
@@ -165,7 +167,7 @@ BLEACHER_REPORT_ENV_LANGUAGE=en_US.UTF-8
 BLEACHER_REPORT_ENV_LANG=en_US.UTF-8
 BLEACHER_REPORT_ENV_LC_ALL=en_US.UTF-8
 </code></pre></li>
-<li><p> Surprisingly none of the environment variables initialized by the <code>--link</code> option is visible when you run the <code>env</code> command after shelling into the <code>web</code> container via <code>docker-enter</code>.  To see why the <code>env</code> command would not return environment variables initialized by the <code>--link</code> option, please check out <em><a href="http://learningdocker.com/docker-container-deep-dive/">Docker Container Deep Dive</a></em>.</p>
+<li><p> Surprisingly none of the environment variables initialized by the <code>--link</code> option is visible when you run the <code>env</code> command after shelling into the <code>web</code> container via <code>docker-enter</code>.  To see why the <code>env</code> command would not return environment variables initialized by the <code>--link</code> option, please check out <em><a href="http://learningdocker.com/docker-container-deep-dive-legacy/">Docker Container Deep Dive</a></em>.</p>
 
 <pre><code>Host% docker-enter web
 

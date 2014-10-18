@@ -2,6 +2,8 @@
 
 <p>Practice makes perfect.  Some readers may find going through this tutorial from the beginning helpful in solidifying their understanding of Docker.  The following steps will restore a Mac OS X host to the state before the completion of this tutorial.  We run through them regularly, so we may repeat the quick start guide ourselves as we make revisions and updates.</p>
 
+<!--more-->
+
 <ol>
 <li><p>Turn off the Boot2Docker virtual machine.</p>
 
@@ -24,7 +26,7 @@ poweroff
 <p><img src="https://s3.amazonaws.com/learningdocker/wordpress/starting-over-mac-os-x/delete-all-files.jpg" alt="image" /></p></li>
 <li><p>Drag the VirtualBox executable and the Boot2Docker installer from the <code>Applications</code> folder to <code>Trash</code>.</p></li>
 <li><p>Delete both the <code>~/.boot2docker</code> directory and the <code>~/VirtualBox VMs</code> directory.</p></li>
-<li><p>If you have created <code>hartl_test</code> and <code>hartl_development</code> as part of going through <em><a href="http://learningdocker.com/linking-dockerized-application-database-mac-os-x-host/">Linking a Dockerized Application to a Database on the Mac OS X Host</a></em>, make sure to drop the databases and the superuser role <code>docker</code>.</p>
+<li><p>If you have created <code>hartl_test</code> and <code>hartl_development</code> as part of going through <em><a href="http://learningdocker.com/linking-dockerized-application-database-mac-os-x-host-legacy/">Linking a Dockerized Application to a Database on the Mac OS X Host</a></em>, make sure to drop the databases and the superuser role <code>docker</code>.</p>
 
 <pre><code># DOCKERDB_ENV_POSTGRESQL_DB=hartl_development
 # DOCKERDB_ENV_POSTGRESQL_USER=docker
@@ -35,7 +37,7 @@ Host% bundle exec rake db:drop:all
 
 Host% dropuser docker
 </code></pre></li>
-<li><p>If you have added the alias <code>dlc</code> at the end of <em><a href="http://learningdocker.com/running-boot2docker-mac-os-x/">Running Boot2Docker on Mac OS X</a></em> and defined the <code>docker-enter</code> shell function as part of going through <em><a href="http://learningdocker.com/getting-inside-running-docker-containers-without-ssh/">Getting Inside Running Docker Containers without SSH</a></em>, please remove both entries from your <code>.profile</code>.</p>
+<li><p>If you have added the alias <code>dlc</code> at the end of <em><a href="http://learningdocker.com/running-boot2docker-mac-os-x-legacy/">Running Boot2Docker on Mac OS X</a></em> and defined the <code>docker-enter</code> shell function as part of going through <em><a href="http://learningdocker.com/getting-inside-running-docker-containers-without-ssh-legacy/">Getting Inside Running Docker Containers without SSH</a></em>, please remove both entries from your <code>.profile</code>.</p>
 
 <pre><code>Host% more ~/.profile
 ...

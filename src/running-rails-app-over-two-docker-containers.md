@@ -199,7 +199,7 @@
 	```
 	Host% docker-enter web
 	
-	root@a6bdcfbc845b#
+	root@a6bdcfbc845b# env
 	rvm_bin_path=/usr/local/rvm/bin
 	GEM_HOME=/usr/local/rvm/gems/ruby-2.1.2
 	SHELL=/bin/bash

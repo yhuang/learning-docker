@@ -6,7 +6,7 @@ Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](ht
 
 To make entering a running Docker container even simpler, Docker, Inc. is introducing `docker exec` with the release of Docker v1.3.0.  The `docker exec` command spawns a process inside a given Docker container.  By using `docker exec` to launch a new Bash session inside the running Docker container, developers can more easily debug their Dockerized applications.  
 
-Docker is not recommending users to abandon the "one application per container" development pattern with `docker exec`.  Instead, Docker hopes to wean users off the anti-pattern of running `sshd` inside their containers.  
+Docker is not recommending users to abandon the "one application per container" development pattern with `docker exec`.  Instead, Docker hopes to wean them off the anti-pattern of running `sshd` inside their containers.  
 
 With the introduction of `docker exec`, `nsenter` has officially become obsolete.
 

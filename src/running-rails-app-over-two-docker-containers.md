@@ -87,7 +87,7 @@
 
 	```
 	Host% docker exec -it web bash
-	root@a6bdcfbc845b# more /app/bin/start-server                 
+	root@a6bdcfbc845b:/app# more /app/bin/start-server                 
 	#!/bin/bash
 	cd /app
 	source /etc/profile.d/rvm.sh
@@ -103,7 +103,7 @@
 
 	```
 	Host% docker exec -it web bash
-	root@a6bdcfbc845b# more /app/config/database.yml 
+	root@a6bdcfbc845b:/app# more /app/config/database.yml 
 	development:
 	  adapter: postgresql
 	  encoding: unicode

@@ -37,15 +37,11 @@ Host% bundle exec rake db:drop:all
 
 Host% dropuser docker
 </code></pre></li>
-<li><p>If you have added the alias <code>dlc</code> at the end of <em><a href="http://learningdocker.com/running-boot2docker-mac-os-x/">Running Boot2Docker on Mac OS X</a></em> and defined the <code>docker-enter</code> shell function as part of going through <em><a href="http://learningdocker.com/getting-inside-running-docker-containers-without-ssh/">Getting Inside Running Docker Containers without SSH</a></em>, please remove both entries from your <code>.profile</code>.</p>
+<li><p>If you have added the alias <code>dlc</code> at the end of <em><a href="http://learningdocker.com/running-boot2docker-mac-os-x/">Running Boot2Docker on Mac OS X</a></em>, please remove both entries from your <code>.profile</code>.</p>
 
 <pre><code>Host% more ~/.profile
 ...
 # Remove the following entries
 alias dlc='docker ps -l -q'
-
-docker-enter() {
-    boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter $@
-}
 </code></pre></li>
 </ol>

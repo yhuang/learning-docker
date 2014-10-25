@@ -87,7 +87,7 @@
 
 	# Check out all the running processes inside the web container.  Note
 	# the PIDs are different from those printed by "docker top".
-	root@7775474b902d:~# ps aux
+	root@7775474b902d:/app# ps aux
 	USER  PID %CPU %MEM  COMMAND
 	root    1  0.0  0.3  /bin/bash /app/bin/start-server
 	root   74  0.1  3.4  /usr/local/rvm/rubies/ruby-2.1.2/bin/ruby bin/rails s Puma
@@ -96,7 +96,7 @@
 
 	# All the environment variables from the PostgreSQL database
 	# container are present.
-	root@7775474b902d:~# env
+	root@7775474b902d:/app# env
 	HOSTNAME=7775474b902d
 	DOCKERDB_PORT_5432_TCP_PORT=5432
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

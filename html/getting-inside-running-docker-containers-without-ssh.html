@@ -2,6 +2,8 @@
 
 <p>Jerome Petazzoni of Docker, Inc. <a href="http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/">published an article on his company's blog</a> to show how people can get inside running Docker containers with a lightweight tool called <a href="https://github.com/jpetazzo/nsenter"><code>nsenter</code></a>.  By letting people <strong>enter</strong> the Linux kernel <strong>n</strong>ame<strong>s</strong>paces that Docker uses to build containers, <code>nsenter</code> effectively gives them shell access to running Docker containers without SSH daemon.</p>
 
+<!--more-->
+
 <ol>
 <li><p>Install <code>nsenter</code> and <code>docker-enter</code> into <code>/var/lib/boot2docker/</code> on the Boot2Docker virtual machine.</p>
 

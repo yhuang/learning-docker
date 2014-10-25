@@ -2,6 +2,8 @@
 
 <p>As part of going through the steps outlined under <em><a href="http://learningdocker.com/running-rails-app-over-two-docker-containers/">Running a Rails App over Two Docker Containers</a></em>, we pulled the <code>learningdocker/docker_quick_start</code> image from Docker Hub onto the Boot2Docker virtual machine.  Instead of using an already made image, we will now build the Rails application's Docker image on the Boot2Docker virtual machine via our Mac OS X host and push the final image onto our Docker Hub accounts.</p>
 
+<!--more-->
+
 <ol>
 <li><p>Please create an account on <a href="https://hub.docker.com">Docker Hub</a>.</p>
 
@@ -220,7 +222,6 @@ sys 0m0.024s
 <pre><code>Host% docker push $DOCKERUSER/docker_quick_start
 </code></pre></li>
 </ol>
-
 
 <h3>How Docker Image Caching Works</h3>
 

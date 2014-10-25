@@ -2,6 +2,8 @@
 
 <p>The database service is often not on the same host as the application.  Earlier we launched PostgreSQL Service as a Docker Container on the Boot2Docker virtual machine and accessed it from the Mac OS X host.  Now we will set up the PostgreSQL service on the Mac OS X host and connect to it from a dockerized Rails application on the Boot2Docker virtual machine.</p>
 
+<!--more-->
+
 <ol>
 <li><p>Please go through the steps outlined under <em><a href="http://learningdocker.com/preflight-checks/">Preflight Checks</a></em> to ensure the system is properly configured.</p></li>
 <li><p>Install PostgreSQL on the Mac OS X host.  To keep the length of this tutorial manageable, we leave the installation and the configuration of PostgreSQL on Mac OS X to the readers.</p></li>
@@ -143,7 +145,6 @@ CONTAINER ID  IMAGE                     STATUS  PORTS        NAMES
 Host% docker stop web
 </code></pre></li>
 </ol>
-
 
 <h3>Summary</h3>
 

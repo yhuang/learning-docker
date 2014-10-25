@@ -86,7 +86,7 @@
 	The new container named `web` will ultimately execute the script `/app/bin/start-server` on its filesystem.
 
 	```
-	Host% docker-enter web
+	Host% docker exec -it web bash
 	root@a6bdcfbc845b# more /app/bin/start-server                 
 	#!/bin/bash
 	cd /app
@@ -102,7 +102,7 @@
 7.  The environment variables supplied as `-e` options to the `docker run` command will be interpolated in `/app/config/database.yml` on the `web` container's filesystem.
 
 	```
-	Host% docker-enter web
+	Host% docker exec -it web bash
 	root@a6bdcfbc845b# more /app/config/database.yml 
 	development:
 	  adapter: postgresql
@@ -170,70 +170,25 @@
 	#         dockerdb.
 	```
 	
-11.	 To see what Docker is doing better, we will launch the `learningdocker/docker_quick_start` image and run the `env` command to enumerate all environment variables on the container.  The container alias in this case is `bleacher_report`, so all the environment variables inside the container are prefixed with `BLEACHER_REPORT_`.
-	
+11.	 To see what Docker is doing better, we will run the `env` command after shelling into the `web` container via `docker exec -it web bash`.
+	 
 	```
-	Host% docker run --rm \
-	--name example \
-	--link db:bleacher_report \
-	learningdocker/docker_quick_start env
-	HOME=/
+	Host% docker exec -it web bash
+	
+	root@03b4a6d5bdb7:/app# env
+	HOSTNAME=03b4a6d5bdb7
+	DOCKERDB_PORT_5432_TCP_PORT=5432
 	PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-	HOSTNAME=7775474b902d
-	BLEACHER_REPORT_PORT=tcp://172.17.0.4:5432
-	BLEACHER_REPORT_PORT_5432_TCP=tcp://172.17.0.4:5432
-	BLEACHER_REPORT_PORT_5432_TCP_ADDR=172.17.0.4
-	BLEACHER_REPORT_PORT_5432_TCP_PORT=5432
-	BLEACHER_REPORT_PORT_5432_TCP_PROTO=tcp
-	BLEACHER_REPORT_NAME=/tmp/bleacher_report
-	BLEACHER_REPORT_ENV_POSTGRESQL_USER=docker
-	BLEACHER_REPORT_ENV_POSTGRESQL_PASS=docker
-	BLEACHER_REPORT_ENV_POSTGRESQL_DB=hartl
-	BLEACHER_REPORT_ENV_LANGUAGE=en_US.UTF-8
-	BLEACHER_REPORT_ENV_LANG=en_US.UTF-8
-	BLEACHER_REPORT_ENV_LC_ALL=en_US.UTF-8
-	```
-	
-12.  Surprisingly none of the environment variables initialized by the `--link` option is visible when you run the `env` command after shelling into the `web` container via `docker-enter`.  To see why the `env` command would not return environment variables initialized by the `--link` option, please check out *[Docker Container Deep Dive](http://learningdocker.com/docker-container-deep-dive/)*.
-
-	```
-	Host% docker-enter web
-	
-	Host% env
-	rvm_bin_path=/usr/local/rvm/bin
-	GEM_HOME=/usr/local/rvm/gems/ruby-2.1.2
-	SHELL=/bin/bash
-	TERM=xterm-256color
-	IRBRC=/usr/local/rvm/rubies/ruby-2.1.2/.irbrc
-	MY_RUBY_HOME=/usr/local/rvm/rubies/ruby-2.1.2
-	USER=root
-	_system_type=Linux
-	rvm_path=/usr/local/rvm
-	rvm_prefix=/usr/local
-	MAIL=/var/mail/root
-	PATH=/usr/local/rvm/gems/ruby-2.1.2/bin:
-	     /usr/local/rvm/gems/ruby-2.1.2@global/bin:
-	     /usr/local/rvm/rubies/ruby-2.1.2/bin:
-	     /usr/local/sbin:
-	     /usr/local/bin:
-	     /usr/sbin:
-	     /usr/bin:
-	     /sbin:/bin:
-	     /usr/local/rvm/bin
-	PWD=/root
-	_system_arch=x86_64
-	_system_version=jessie_sid
-	rvm_version=1.25.28 (stable)
+	PWD=/app
+	DOCKERDB_ENV_POSTGRESQL_PASS=docker
 	SHLVL=1
-	HOME=/root
-	LOGNAME=root
-	GEM_PATH=/usr/local/rvm/gems/ruby-2.1.2:/usr/local/rvm/gems/ruby-2.1.2@global
-	RUBY_VERSION=ruby-2.1.2
-	_system_name=Debian
+	DOCKERDB_PORT_5432_TCP_ADDR=172.17.0.4
+	DOCKERDB_ENV_POSTGRESQL_USER=docker
+	DOCKERDB_ENV_POSTGRESQL_DB=hartl
 	_=/usr/bin/env
 	```
 
-13.  If the linking has succeeded, the Rails application should still be operational.  Run `docker ps -a` to see all the containers.  In this example, Docker has assigned the Rails application container to `port 49155`, which is different from the port assigned to the container that launched without the `--link` option (`port 49154`).  Because we had forwarded ports in the `49000..49900` range from the Mac OS X host to the Boot2Docker virtual machine, the Rails application may be accessed from the Mac OS X host at `http://localhost:49155/`.
+12.  If the linking has succeeded, the Rails application should still be operational.  Run `docker ps -a` to see all the containers.  In this example, Docker has assigned the Rails application container to `port 49155`, which is different from the port assigned to the container that launched without the `--link` option (`port 49154`).  Because we had forwarded ports in the `49000..49900` range from the Mac OS X host to the Boot2Docker virtual machine, the Rails application may be accessed from the Mac OS X host at `http://localhost:49155/`.
 
 	```
 	Host% docker ps -a
@@ -242,7 +197,7 @@
 	41ecc575f69c  kamui/postgresql                   49153->5432  db
 	```
 
-14.  Stop the containers in another console with its environment variable `DOCKER_HOST` set.
+13.  Stop the containers in another console with its environment variable `DOCKER_HOST` set.
 
 	```
 	# Stop the Rails Application Container

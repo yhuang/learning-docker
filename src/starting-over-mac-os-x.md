@@ -44,16 +44,12 @@ Practice makes perfect.  Some readers may find going through this tutorial from 
 	Host% dropuser docker
 	```
 
-7.  If you have added the alias `dlc` at the end of *[Running Boot2Docker on Mac OS X](http://learningdocker.com/running-boot2docker-mac-os-x/)* and defined the `docker-enter` shell function as part of going through *[Getting Inside Running Docker Containers without SSH](http://learningdocker.com/getting-inside-running-docker-containers-without-ssh/)*, please remove both entries from your `.profile`.
+7.  If you have added the alias `dlc` at the end of *[Running Boot2Docker on Mac OS X](http://learningdocker.com/running-boot2docker-mac-os-x/)*, please remove both entries from your `.profile`.
 
 	```
 	Host% more ~/.profile
 	...
 	# Remove the following entries
 	alias dlc='docker ps -l -q'
-	
-	docker-enter() {
-    	boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter $@
-	}
 	```
 	

@@ -4,53 +4,12 @@
 
 Jerome Petazzoni of Docker, Inc. [published an article on his company's blog](http://blog.docker.com/2014/06/why-you-dont-need-to-run-sshd-in-docker/) to show how people can get inside running Docker containers with a lightweight tool called [`nsenter`](https://github.com/jpetazzo/nsenter).  By letting people **enter** the Linux kernel **n**ame**s**paces that Docker uses to build containers, `nsenter` effectively gives them shell access to running Docker containers without SSH daemon.
 
-1.  Install `nsenter` and `docker-enter` into `/var/lib/boot2docker/` on the Boot2Docker virtual machine.
+To make entering a running Docker container even simpler, Docker, Inc. is introducing `docker exec` with the release of Docker v1.3.0.  The `docker exec` command spawns a process inside a given Docker container.  By using `docker exec` to launch a new Bash session inside the running Docker container, developers can more easily debug their Dockerized applications.  
 
-	```
-	                        ##        .
-	                  ## ## ##       ==
-	               ## ## ## ##      ===
-	           /""""""""""""""""\___/ ===
-	      ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
-	           \______ o          __/
-	             \    \        __/
-	              \____\______/
-	 _                 _   ____     _            _
-	| |__   ___   ___ | |_|___ \ __| | ___   ___| | _____ _ __
-	| '_ \ / _ \ / _ \| __| __) / _` |/ _ \ / __| |/ / _ \ '__|
-	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
-	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
-	boot2docker: 1.3.0
-	             master : a083df4 - Thu Oct 16 17:05:03 UTC 2014
-	
-	docker@boot2docker:~$ docker run --rm \
-	-v /var/lib/boot2docker:/target \
-	jpetazzo/nsenter
-	
-	Installing nsenter to /target
-	Installing docker-enter to /target
-	```
+Docker is not recommending users to abandon the "one application per container" development pattern with `docker exec`.  Instead, Docker hopes to wean users off the anti-pattern of running `sshd` inside their containers.  
 
-2.  `docker-enter` is simply a small wrapper shell script that calls the `nsenter` binary.  `docker-enter` takes a container ID or a container name as a parameter to look up the container's process ID (PID) on the Boot2Docker virtual machine.  Once it has the container's PID, `docker-enter` can invoke `nsenter` and shell into  the running container.
+With the introduction of `docker exec`, `nsenter` has officially become obsolete.
 
-	```
-	# What docker-enter does behind the scenes
-	docker@boot2docker:~$ PID=$(docker inspect \
-	--format {{.State.Pid}} <container_name_or_ID>)
-	
-	docker@boot2docker:~$ nsenter --target $PID \
-	--mount --uts --ipc --net --pid
-	```
-
-3.  Add the `docker-enter` shell function to your `.profile`, so `docker-enter` may be called directly from the Mac OS X host; otherwise, Mac OS X users would have to first ssh into their Boot2Docker virtual machines before they may shell into running containers.
-
-	```
-	Host% more ~/.profile
-	...
-	docker-enter() {
-    	boot2docker ssh -t sudo /var/lib/boot2docker/docker-enter $@
-	}
-	```
 	
 
 	

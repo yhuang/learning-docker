@@ -31,7 +31,9 @@ export DOCKERDB_PORT_5432_TCP_PORT=15432;
 <li><p>Assuming the superuser role <code>docker</code>,  the test database <code>hartl_test</code>, and the development database <code>hartl_development</code> do not exist on the Mac OS X host's PostgreSQL server, the specs included in the <code>LearningDocker/docker_quick_start</code> repository should fail.</p></li>
 <li><p>Execute the following commands to create the superuser role <code>docker</code>, instantiate the required PostgreSQL databases, and run the schema migrations on the test database and development database.  If all the commands have finished without error, the specs should pass.</p>
 
-<pre><code>Host% bundle exec rspec spec
+<pre><code>
+Host% bundle install
+Host% bundle exec rspec spec
 FATAL:  role "docker" does not exist (PG::Error)
 
 # Create superuser role docker

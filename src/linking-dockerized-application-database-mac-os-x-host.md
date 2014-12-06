@@ -1,6 +1,8 @@
 ###Linking a Dockerized Application to a Database on the Mac OS X Host
-![image](https://s3.amazonaws.com/learningdocker/wordpress/linking-dockerized-application-database-mac-os-x-host/dockerized-rails-application-postgresql-database-mac-os-x.jpg)
-The database service is often not on the same host as the application.  Earlier we launched PostgreSQL Service as a Docker Container on the Boot2Docker virtual machine and accessed it from the Mac OS X host.  Now we will set up the PostgreSQL service on the Mac OS X host and connect to it from a dockerized Rails application on the Boot2Docker virtual machine.
+
+![image](https://s3.amazonaws.com/learningdocker/wordpress/linking-dockerized-application-database-mac-os-x-host/dockerized-rails-application-postgresql-database-mac-os-x.jpg)
+
+The database service is often not on the same host as the application.  Earlier we launched PostgreSQL Service as a Docker Container on the Boot2Docker virtual machine and accessed it from the Mac OS X host.  Now we will set up the PostgreSQL service on the Mac OS X host and connect to it from a dockerized Rails application on the Boot2Docker virtual machine.
 
 1.  Please go through the steps outlined under *[Preflight Checks](http://learningdocker.com/preflight-checks/)* to ensure the system is properly configured.
 
@@ -35,6 +37,7 @@
 6.	Execute the following commands to create the superuser role `docker`, instantiate the required PostgreSQL databases, and run the schema migrations on the test database and development database.  If all the commands have finished without error, the specs should pass.
 
 	```
+	Host% bundle install
 	Host% bundle exec rspec spec
 	FATAL:  role "docker" does not exist (PG::Error)
 	

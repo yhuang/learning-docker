@@ -17,7 +17,7 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	Email: <Your Email Address>
 	Login Succeeded
 	
-	Host% export $DOCKERUSER=<Your Docker Hub Username>
+	Host% export DOCKERUSER=<Your Docker Hub Username>
 	```
 
 3.  Delete the `learningdocker/docker_quick_start` image.

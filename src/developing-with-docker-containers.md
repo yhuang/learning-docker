@@ -128,7 +128,7 @@ When a process creates a file, Docker adds the new file to the top read-write la
       @user = User.new
   	end
   	
-  	# Restart the 
+  	# Restart the web server
   	root@104e1b560d48:/app# /app/bin/start-server
 	```
 	
@@ -141,7 +141,7 @@ When a process creates a file, Docker adds the new file to the top read-write la
 	root@104e1b560d48:/app# exit
 	
 	# Remove the Rails Application Container
-	Host% docker rmi web
+	Host% docker rm web
 	```
 
 10.  Stop the `db` container.

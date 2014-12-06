@@ -4,7 +4,7 @@
 
 Because the Docker engine relies on Linux-specific kernel features, it cannot run on Mac OS X directly yet.  Users who wish to run Docker on Mac OS X must do so through a Linux virtual machine.  This extra layer can make working with Docker on Mac OS X a bit unwieldy, espeically for people who are just getting started.  To make Docker easier to use on Mac OS X, Docker, Inc. developed [Boot2Docker](http://docs.docker.com/installation/mac/) to streamline this process.
 
-1.  Download the [Boot2Docker package installer v1.3.0](https://github.com/boot2docker/osx-installer/releases/download/v1.3.0/Boot2Docker-1.3.0.pkg), which will install VirtualBox v4.3.18-r96516, Boot2Docker v1.3.0, Boot2Docker Management Tool v1.3.0, and Docker v1.3.0 to the Mac OS X host.  
+1.  Download the [Boot2Docker package installer v1.3.2](https://github.com/boot2docker/osx-installer/releases/download/v1.3.2/Boot2Docker-1.3.2.pkg), which will install VirtualBox v4.3.18-r96516, Boot2Docker v1.3.0, Boot2Docker Management Tool v1.3.0, and Docker v1.3.0 to the Mac OS X host.  
 
 	VirtualBox is a general-purpose virtualizer for x86 hardware that will launch a lightweight Linux distribution on the Boot2Docker.iso called Tiny Core Linux.  Because it is small (under 25MB), Tiny Core Linux boots in seconds and runs completely from RAM.  Managing the Boot2Docker virtual machine is done through the Boot2Docker management utility `boot2docker` instead of VirtualBox.  
 
@@ -24,9 +24,9 @@ Because the Docker engine relies on Linux-specific kernel features, it cannot ru
 	Writing $HOME/.boot2docker/certs/boot2docker-vm/key.pem
 	...
 	To connect the Docker client to the Docker daemon, please set:
-    export DOCKER_HOST=tcp://192.168.59.103:2376
-    export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
+    export DOCKER_CERT_PATH=/Users/jimmyhuang/.boot2docker/certs/boot2docker-vm
     export DOCKER_TLS_VERIFY=1
+    export DOCKER_HOST=tcp://192.168.59.103:2376
     ```
     
     The latest version of Boot2Docker sets up two network adaptors.  One allows the Boot2Docker virtual machine to download images and files from the internet via NAT; the other exposes the Docker container's port to the host-only network.  
@@ -37,15 +37,15 @@ Because the Docker engine relies on Linux-specific kernel features, it cannot ru
 	# Information about the Docker client and Docker server installed 
 	# on the Boot2docker virtual machine
 	Host% docker version
-	Client version: 1.3.0
+	Client version: 1.3.2
 	Client API version: 1.15
 	Go version (client): go1.3.3
-	Git commit (client): c78088f
+	Git commit (client): 39fa2fa
 	OS/Arch (client): darwin/amd64
-	Server version: 1.3.0
+	Server version: 1.3.2
 	Server API version: 1.15
 	Go version (server): go1.3.3
-	Git commit (server): c78088f
+	Git commit (server): 39fa2fa
 	```
 	
 	Once the virtualized Docker engine is up and running, users can build, run, and manage Docker containers with the Mac OS X Docker client `docker`.
@@ -65,14 +65,14 @@ Because the Docker engine relies on Linux-specific kernel features, it cannot ru
 	| |_) | (_) | (_) | |_ / __/ (_| | (_) | (__|   <  __/ |
 	|_.__/ \___/ \___/ \__|_____\__,_|\___/ \___|_|\_\___|_|
 		
-	boot2docker: 1.3.0
-             master : a083df4 - Thu Oct 16 17:05:03 UTC 2014
+	Boot2Docker version 1.3.2, build master : 495c19a - Mon Nov 24 20:40:58 UTC 2014
+	Docker version 1.3.2, build 39fa2fa
 	```5.  Stop the Boot2Docker virtual machine.
 	```
 	Host% boot2docker stop	```6.  [Forward ports](http://cjlarose.com/2014/03/08/run-docker-with-vagrant.html) in the `49000..49900` range from the Mac OS X host to the Boot2Docker virtual machine, so a dockerized web service running on the Boot2Docker virtual machine may be accessed from the Mac OS X host.  This command only needs to be run once.	```
 	Host% for i in {49000..49900}; do \
 	VBoxManage modifyvm "boot2docker-vm" --natpf1 "tcp-port$i,tcp,,$i,,$i"; \
-	done	```7.  Boot2Docker v1.3.0 supports VirtualBox guest additions, so the `/Users` folder is being shared between the the Boot2Docker virtual machine and the Mac OS X host by default.  Once this connection is established, data written to Boot2Docker will be accessible from the Mac OS X host.  Confirm that the ports are being forwarded from the Mac OS X host to the Boot2Docker virtual machine and the `/Users` folder is being shared between the two systems.
+	done	```7.  Boot2Docker v1.3.2 supports VirtualBox guest additions, so the `/Users` folder is being shared between the the Boot2Docker virtual machine and the Mac OS X host by default.  Once this connection is established, data written to Boot2Docker will be accessible from the Mac OS X host.  Confirm that the ports are being forwarded from the Mac OS X host to the Boot2Docker virtual machine and the `/Users` folder is being shared between the two systems.
 	```
 	Host% VBoxManage showvminfo boot2docker-vm
 	...

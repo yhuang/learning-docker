@@ -22,13 +22,13 @@
 	```
 	Host% docker info
 	Containers: 0
-	Images: 18
+	Images: 29
 	Storage Driver: aufs
 	 Root Dir: /mnt/sda1/var/lib/docker/aufs
-	 Dirs: 18
+	 Dirs: 29
 	Execution Driver: native-0.2
-	Kernel Version: 3.16.4-tinycore64
-	Operating System: Boot2Docker 1.3.0 (TCL 5.4); master : a083df4 - Thu Oct 16 17:05:03 UTC 2014
+	Kernel Version: 3.16.7-tinycore64
+	Operating System: Boot2Docker 1.3.2 (TCL 5.4); master : 495c19a - Mon Nov 24 20:40:58 UTC 2014
 	Debug mode (server): true
 	Debug mode (client): false
 	Fds: 10

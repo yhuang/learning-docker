@@ -17,7 +17,7 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	Email: <Your Email Address>
 	Login Succeeded
 	
-	Host% export $DOCKERUSER=<Your Docker Hub Username>
+	Host% export DOCKERUSER=<Your Docker Hub Username>
 	```
 
 3.  Delete the `learningdocker/docker_quick_start` image.
@@ -26,14 +26,12 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	Host% docker images
 	REPOSITORY                         TAG     IMAGE ID      VIRTUAL SIZE
 	learningdocker/docker_quick_start  latest  bbdfb8c5dab3  805.2 MB
-	jpetazzo/nsenter                   latest  f495905a2670  365.7 MB
 	kamui/postgresql                   latest  249dad1e2537  387.5 MB
 	
 	Host% docker rmi learningdocker/docker_quick_start
 	
 	Host% docker images
 	REPOSITORY                         TAG     IMAGE ID      VIRTUAL SIZE
-	jpetazzo/nsenter                   latest  f495905a2670  365.7 MB
 	kamui/postgresql                   latest  249dad1e2537  387.5 MB
 	```
 
@@ -150,7 +148,6 @@ As part of going through the steps outlined under *[Running a Rails App over Two
 	REPOSITORY                      TAG     IMAGE ID      VIRTUAL SIZE
 	$DOCKERUSER/docker_quick_start  latest  d1defef89362  805.2 MB
 	debian                          jessie  53f380325ee9  120 MB
-	jpetazzo/nsenter                latest  f495905a2670  365.7 MB
 	kamui/postgresql                latest  249dad1e2537  387.5 MB
 	```
 

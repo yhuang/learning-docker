@@ -35,6 +35,7 @@
 6.	Execute the following commands to create the superuser role `docker`, instantiate the required PostgreSQL databases, and run the schema migrations on the test database and development database.  If all the commands have finished without error, the specs should pass.
 
 	```
+	Host% bundle install
 	Host% bundle exec rspec spec
 	FATAL:  role "docker" does not exist (PG::Error)
 	

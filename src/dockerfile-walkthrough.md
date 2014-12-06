@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -qy \
  procps
 
 # Install RVM, Ruby 2.1.2, and the Bundler gem
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 RUN curl -sSL https://get.rvm.io | bash -s stable
 RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install bundler --no-ri --no-rdoc"]
 
@@ -73,6 +74,8 @@ RUN apt-get update && apt-get install -qy \
 The `RUN` instruction executes any command in a shell via `/bin/sh -c` on the container's filesystem.  On this line, we have rolled a system-wide upgrade and the installation of some basic Debian system packages required by the Rails application into one command as recommended by [Michael Crosby of Docker, Inc.](Dockerfile Best Practices](http://crosbymichael.com/dockerfile-best-practices-take-2.html)
 
 ```
+RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+
 RUN curl -sSL https://get.rvm.io | bash -s stable
 
 RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install bundler --no-ri --no-rdoc"]
@@ -82,7 +85,7 @@ RUN ["/bin/bash", "-l", "-c", "rvm requirements; rvm install 2.1.2; gem install 
 # -c  Commands are read from string.
 ```
 
-These two `RUN` instructions prepare the Docker image to launch a Ruby on Rails application.  We install the stable version of RVM in the first `RUN` instruction.  In the second `RUN` instruction, we use RVM to install Ruby 2.1.2 then add the bundler gem to the `ruby-2.1.2@global` gemset.  According to [RVM's documentation](https://rvm.io/integration/gnome-terminal), RVM requires the login shell to run properly; therefore, we need to pass `rvm requirements`, `rvm install 2.1.2`, and `gem install bundler --no-ri --no-rdoc` as a command string to the `bash` login shell.
+These three `RUN` instructions prepare the Docker image to launch a Ruby on Rails application.  We install the stable version of RVM in the first `RUN` instruction.  In the second `RUN` instruction, we use RVM to install Ruby 2.1.2 then add the bundler gem to the `ruby-2.1.2@global` gemset.  According to [RVM's documentation](https://rvm.io/integration/gnome-terminal), RVM requires the login shell to run properly; therefore, we need to pass `rvm requirements`, `rvm install 2.1.2`, and `gem install bundler --no-ri --no-rdoc` as a command string to the `bash` login shell.
 
 The second `RUN` instruction is in the exec form `RUN ["executable", "param1", "param2"]`.  The exec form avoids string munging by shell and lets the executable run using base images that do not contain `/bin/sh`.
 

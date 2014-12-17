@@ -4,7 +4,7 @@
 
 Because the Docker engine relies on Linux-specific kernel features, it cannot run on Mac OS X directly yet.  Users who wish to run Docker on Mac OS X must do so through a Linux virtual machine.  This extra layer can make working with Docker on Mac OS X a bit unwieldy, espeically for people who are just getting started.  To make Docker easier to use on Mac OS X, Docker, Inc. developed [Boot2Docker](http://docs.docker.com/installation/mac/) to streamline this process.
 
-1.  Download the [Boot2Docker package installer v1.3.2](https://github.com/boot2docker/osx-installer/releases/download/v1.3.2/Boot2Docker-1.3.2.pkg), which will install VirtualBox v4.3.18-r96516, Boot2Docker v1.3.0, Boot2Docker Management Tool v1.3.0, and Docker v1.3.0 to the Mac OS X host.  
+1.  Download the [Boot2Docker package installer v1.3.2](https://github.com/boot2docker/osx-installer/releases/download/v1.3.2/Boot2Docker-1.3.2.pkg), which will install VirtualBox v4.3.18-r96516, Boot2Docker v1.3.2, Boot2Docker Management Tool v1.3.2, and Docker v1.3.2 to the Mac OS X host.  
 
 	VirtualBox is a general-purpose virtualizer for x86 hardware that will launch a lightweight Linux distribution on the Boot2Docker.iso called Tiny Core Linux.  Because it is small (under 25MB), Tiny Core Linux boots in seconds and runs completely from RAM.  Managing the Boot2Docker virtual machine is done through the Boot2Docker management utility `boot2docker` instead of VirtualBox.  
 
